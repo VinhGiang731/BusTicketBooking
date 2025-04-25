@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servler:
+    context-path: /busbooking
+
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/busticket"
+    username: vinhgiang
+    password: 31072004
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
