@@ -1,6 +1,6 @@
 server:
   port: 8080
-  servler:
+  servlet:
     context-path: /busbooking
 
 spring:
