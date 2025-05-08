@@ -1,4 +1,4 @@
-package com.project.busticket.dto.request;
+package com.project.busticket.dto.request.user;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

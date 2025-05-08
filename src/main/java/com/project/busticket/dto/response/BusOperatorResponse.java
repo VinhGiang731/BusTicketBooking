@@ -1,4 +1,4 @@
-package com.project.busticket.dto.request;
+package com.project.busticket.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,11 +12,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserCreationRequest {
-    String userName;
-    String password;
-    String firstName;
-    String lastName;
-    String email;
-    String phone;
+public class BusOperatorResponse {
+    String busOperatorId;
+    String busOperatorName;
+    String contactPhone;
+    String imgUrl;
 }

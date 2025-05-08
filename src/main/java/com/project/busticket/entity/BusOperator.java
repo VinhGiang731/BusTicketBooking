@@ -21,6 +21,7 @@ public class BusOperator {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String busOperatorId;
-    String name;
+    String busOperatorName;
     String contactPhone;
+    String imgUrl;
 }

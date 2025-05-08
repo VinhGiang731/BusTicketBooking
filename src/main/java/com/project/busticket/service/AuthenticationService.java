@@ -9,7 +9,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
-import com.project.busticket.dto.request.AuthenticationRequest;
+import com.project.busticket.dto.request.user.AuthenticationRequest;
 import com.project.busticket.dto.response.AuthenticationResponse;
 import com.project.busticket.entity.User;
 import com.project.busticket.exception.Appexception;

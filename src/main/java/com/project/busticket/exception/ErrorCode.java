@@ -6,9 +6,14 @@ public enum ErrorCode {
     USER_EXISTED(1002, "User existed"),
     USER_NOT_EXISTED(1003, "User not existed"),
     USERNAME_INVALID(1004, "Username must be at least 3 charactor"),
-    PASSWORĐ_INVALID(1004, "Password must be at lest 8 charactors"),
+    PASSWORD_INVALID(1004, "Password must be at lest 8 charactors"),
     UN_AUTHENTICATED(1005, "Unauthenticated"),
-    ;
+    EMAIL_INCORRECT(1006, "Email is not in correct format"),
+    PHONE_INCORRECT(1007, "Phone number must start with 0 and have 10 digits"),
+    NOT_BLANK(1008, "cannot be left blank this"),
+
+    BUS_EXISTED(1009, "BusOperator existed"),
+    BUS_UN_EXISTED(1010, "BusOperator not existed");
 
     private int code;
     private String message;
