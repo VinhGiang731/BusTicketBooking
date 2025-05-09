@@ -1,6 +1,7 @@
 package com.project.busticket.dto.request.busoperator;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BusOperatorRequest {
+    @NotNull(message = "NOT_NULL")
     String busOperatorName;
 
     @NotBlank(message = "NOT_BLANK")

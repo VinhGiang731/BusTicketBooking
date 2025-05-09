@@ -8,4 +8,7 @@ import com.project.busticket.entity.Booking;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, String> {
 
+    boolean existsByUserId_UserId(String userId);
+
+    boolean existsByTripId_TripId(String TripId);
 }

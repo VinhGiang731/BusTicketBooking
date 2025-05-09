@@ -36,9 +36,13 @@ public class BusOperatorService {
         return busOperatorRepository.save(bus);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public List<BusOperatorResponse> getBusOperator() {
         return busOperatorRepository.findAll().stream().map(busOperatorMapper::toBusOperatorResponse).toList();
+    }
+
+    public BusOperatorResponse getBusOperatorById(String id) {
+        return busOperatorMapper.toBusOperatorResponse(
+                busOperatorRepository.findById(id).orElseThrow(() -> new Appexception(ErrorCode.BUS_UN_EXISTED)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

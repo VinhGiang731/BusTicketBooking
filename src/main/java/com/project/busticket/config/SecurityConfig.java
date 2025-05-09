@@ -23,7 +23,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final String[] PUBLIC_ENPOINTS = { "/users", "/auth/login" };
+    private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
+    private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator" };
 
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
@@ -31,7 +32,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request -> request
-                .requestMatchers(HttpMethod.POST, PUBLIC_ENPOINTS).permitAll()
+                .requestMatchers(HttpMethod.POST, PUBLIC_ENPOINTS_POST).permitAll()
+                .requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS_GET).permitAll()
                 .anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
