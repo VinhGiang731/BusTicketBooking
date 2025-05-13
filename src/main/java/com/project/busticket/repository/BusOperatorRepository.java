@@ -12,4 +12,6 @@ public interface BusOperatorRepository extends JpaRepository<BusOperator, String
     boolean existsByBusOperatorName(String busOperatorName);
 
     Optional<BusOperator> findByBusOperatorName(String busOperatorName);
+
+    Optional<BusOperator> findByBusOperatorId(String busOperatorId);
 }

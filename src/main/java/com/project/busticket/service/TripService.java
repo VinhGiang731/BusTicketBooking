@@ -37,12 +37,10 @@ public class TripService {
         return tripRepository.save(trip);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public List<TripResponse> getTrips() {
         return tripRepository.findAll().stream().map(tripMapper::toTripResponse).toList();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public TripResponse getTripById(String id) {
         return tripMapper.toTripResponse(
                 tripRepository.findById(id).orElseThrow(() -> new Appexception(ErrorCode.TRIP_NOT_EXISTED)));

@@ -2,12 +2,12 @@ package com.project.busticket.exception;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.busticket.dto.response.ApiResponse;
 
-@ControllerAdvice
+@RestControllerAdvice(basePackages = "com.project.busticket.api")
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
 
     // ... other exception hasn't handlers ...
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handlingException(RuntimeException exception) {
+    ResponseEntity<ApiResponse> handlingException(Exception exception) {
         ApiResponse apiResponse = new ApiResponse();
 
         apiResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());

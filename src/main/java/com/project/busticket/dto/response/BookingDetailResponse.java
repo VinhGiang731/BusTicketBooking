@@ -1,9 +1,7 @@
-package com.project.busticket.dto.request.booking;
+package com.project.busticket.dto.response;
 
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,16 +14,14 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingRequest {
-    String userId;
-
-    @NotNull(message = "NOT_NULL")
-    String tripId;
-
-    @NotNull(message = "NOT_NULL")
-    @Min(value = 1, message = "INVALID_NUMBER")
+public class BookingDetailResponse {
+    String bookingId;
+    String busOperatorName;
+    String contactPhone;
+    String fromLocation;
+    String toLocation;
+    LocalDateTime departurTime;
+    LocalDateTime arrivalTime;
     Integer seats_number;
-
-    @NotNull(message = "NOT_NULL")
     LocalDateTime bookingTime;
 }

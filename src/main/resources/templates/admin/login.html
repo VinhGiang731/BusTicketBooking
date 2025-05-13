@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng nhập Admin</title>
+  <link rel="stylesheet" href="./assets/css/register.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <img src="https://i.ibb.co/4Z8Yz3B/user.png" alt="Admin Avatar" class="avatar" />
+      <h2>Đăng nhập Admin</h2>
+    </div>
+    <form id="login-form">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="adminuser" required />
+      </div>
+      <div class="input-group">
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="login-btn">Đăng nhập</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (email === "locdeptrai@gmail.com" && password === "123456") {
+        localStorage.setItem("isLoggedIn", true);
+        window.location.href = "admin.html";
+      } else {
+        alert("Email hoặc mật khẩu không đúng!");
+      }
+    });
+  </script>
+</body>
+</html>

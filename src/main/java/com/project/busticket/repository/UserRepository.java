@@ -11,5 +11,7 @@ import com.project.busticket.entity.User;
 public interface UserRepository extends JpaRepository<User, String> {
     boolean existsByUserName(String userName);
 
+    boolean existsByUserId(String userId);
+
     Optional<User> findByUserName(String userName);
 }

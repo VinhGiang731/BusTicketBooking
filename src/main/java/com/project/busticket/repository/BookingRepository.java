@@ -1,5 +1,7 @@
 package com.project.busticket.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,6 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
     boolean existsByUserId_UserId(String userId);
 
     boolean existsByTripId_TripId(String TripId);
+
+    List<Booking> findByUserId_UserId(String userId);
 }

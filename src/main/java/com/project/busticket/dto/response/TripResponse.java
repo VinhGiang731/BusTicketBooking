@@ -16,7 +16,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TripResponse {
-    String bookingId;
     String tripId;
     String busOperatorId;
 

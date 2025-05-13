@@ -16,7 +16,7 @@ public interface BookingMapper {
 
     @Mapping(source = "userId.userId", target = "userId")
     @Mapping(source = "tripId.tripId", target = "tripId")
-    BookingResponse tBookingResponse(Booking booking);
+    BookingResponse toBookingResponse(Booking booking);
 
     @Mapping(source = "userId", target = "userId.userId")
     @Mapping(source = "tripId", target = "tripId.tripId")

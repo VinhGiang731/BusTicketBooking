@@ -1,6 +1,4 @@
-package com.project.busticket.dto.response;
-
-import java.time.LocalDateTime;
+package com.project.busticket.dto.request.user;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,19 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingResponse {
-    String bookingId;
-
-    String userId;
-
-    String tripId;
-
-    Integer seats_number;
-
-    LocalDateTime bookingTime;
+public class IntrospectRequest {
+    String token; // gửi một token để xác thực
 }

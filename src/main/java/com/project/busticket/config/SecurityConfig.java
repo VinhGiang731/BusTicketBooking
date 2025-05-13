@@ -24,7 +24,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
-    private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator" };
+    private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
+            "/busticket/login",
+            "/busticket/schedule", "/busticket/introduce", "/busticket/session-info" };
+    private final String[] STATIC_RESOURSE = { "/css/**", "/js/**", "/imgs/**", "/fonts/**", "/layouts/**",
+            "/admin/**" };
 
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
@@ -34,6 +38,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(request -> request
                 .requestMatchers(HttpMethod.POST, PUBLIC_ENPOINTS_POST).permitAll()
                 .requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS_GET).permitAll()
+                .requestMatchers(HttpMethod.GET, STATIC_RESOURSE).permitAll()
                 .anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bus ticket Travel</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <link rel="icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
+        <script th:src="@{/js/cusor.js}"></script>
+    </head>
+    <body>
+        <header>
+            <div class="container header-container">
+                <div class="logo">
+                    <a href="/busbooking/busticket/homepage"><span>🚌</span> Bus Ticket Travel</a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/busbooking/busticket/homepage" class="active">Trang chủ</a></li>
+                    <li><a href="/busbooking/busticket/schedule">Lịch trình</a></li>
+                    <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
+                    <li><a href="#lien-he">Liên hệ</a></li>
+                    <li><a href="#tro-giup">Trợ giúp</a></li>
+                    <li id="state__login"><a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Main Content (Home Page) -->
+        <div id="home-page">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>Hành trình tuyệt vời bắt đầu từ đây</h1>
+                    <p>Dịch vụ đặt vé xe buýt trực tuyến hàng đầu Việt Nam với hơn 500+ tuyến đường</p>
+                </div>
+            </section>
+
+            <!-- Search Form -->
+            <div class="container">
+                <div class="search-form">
+                    <h2>Tìm và đặt vé xe buýt</h2>
+                    <form id="search-ticket-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="departure">Điểm đi</label>
+                                <select id="departure" required>
+                                    <option value>Chọn điểm đi</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="hcm">TP. Hồ Chí Minh</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="nhatrang">Nha Trang</option>
+                                    <option value="dalat">Đà Lạt</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="arrival">Điểm đến</label>
+                                <select id="arrival" required>
+                                    <option value>Chọn điểm đến</option>
+                                    <option value="hanoi">Hà Nội</option>
+                                    <option value="hcm">TP. Hồ Chí Minh</option>
+                                    <option value="danang">Đà Nẵng</option>
+                                    <option value="nhatrang">Nha Trang</option>
+                                    <option value="dalat">Đà Lạt</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="departure-date">Ngày đi</label>
+                                <input type="date" id="departure-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="return-date">Ngày về (không bắt buộc)</label>
+                                <input type="date" id="return-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="passengers">Số hành khách</label>
+                                <select id="passengers" required>
+                                    <option value="1">1 người</option>
+                                    <option value="2">2 người</option>
+                                    <option value="3">3 người</option>
+                                    <option value="4">4 người</option>
+                                    <option value="5">5 người</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="search-btn">Tìm chuyến xe</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section class="features">
+                <div class="container">
+                    <h2 class="section-title">Tại sao chọn Blue Sky Travel?</h2>
+                    <div class="features-container">
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Đặt vé an toàn</h3>
+                            <p>Thanh toán an toàn với nhiều phương thức khác nhau và bảo mật thông tin 100%.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💰</div>
+                            <h3>Giá cả cạnh tranh</h3>
+                            <p>Đảm bảo giá tốt nhất với nhiều ưu đãi và khuyến mãi hấp dẫn.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>Đặt vé nhanh chóng</h3>
+                            <p>Quy trình đặt vé đơn giản, nhanh chóng chỉ trong vài phút.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Routes -->
+            <section class="popular-routes">
+                <div class="container">
+                    <h2 class="section-title">Gợi ý vé</h2>
+                    <div class="route-cards">
+                        <!-- <div class="route-card">
+                            <div class="route-img" style="background-image: url('/imgs/xehn_dn.jpg');"></div>
+                            <div class="route-info">
+                                <h3>Hà Nội - Đà Nẵng</h3>
+                                <p>Thời gian di chuyển: 14 giờ</p>
+                                <p>Thời gian di chuyển: 14 giờ</p>
+                                <div class="route-price">800.000 VNĐ</div>
+                                <a href="/busbooking/busticket/schedule" class="route-btn book-btn">Đặt ngay</a>
+                            </div>
+                        </div>
+                        <div class="route-card">
+                            <div class="route-img" style="background-image: url('/imgs/xedl_sg.jpg');"></div>
+                            <div class="route-info">
+                                <h3>TP.HCM - Đà Lạt</h3>
+                                <p>Thời gian di chuyển: 7 giờ</p>
+                                <p>Thời gian di chuyển: 7 giờ</p>
+                                <div class="route-price">300.000 VNĐ</div>
+                                <a href="/busbooking/busticket/schedule" class="route-btn book-btn">Đặt ngay</a>
+                            </div>
+                        </div>
+                        <div class="route-card">
+                            <div class="route-img" style="background-image: url('/imgs/xehn_hl.jpg');"></div>
+                            <div class="route-info">
+                                <h3>Hà Nội - Hạ Long</h3>
+                                <p>Thời gian di chuyển: 3 giờ</p>
+                                <p>Thời gian di chuyển: 3 giờ</p>
+                                <div class="route-price">200.000 VNĐ</div>
+                                <a href="/busbooking/busticket/schedule" class="route-btn book-btn">Đặt ngay</a> </div>
+                        </div>
+                    </div> -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Login Page (Hidden by default, will be shown via JavaScript) -->
+            <div id="login-page" style="display: none;">
+                <div class="auth-container">
+                    <div class="auth-form">
+                        <h2>Đăng nhập</h2>
+                        <form id="login-form">
+                            <div class="input-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="password">Mật khẩu</label>
+                                <input type="password" id="password" required>
+                            </div>
+                            <div class="remember-forgot">
+                                <div class="remember-me">
+                                    <input type="checkbox" id="remember">
+                                    <label for="remember">Ghi nhớ đăng nhập</label>
+                                </div>
+                                <a href="#" class="forgot-password">Quên mật khẩu?</a>
+                            </div>
+                            <button type="submit" class="login-btn">Đăng nhập</button>
+                            <div class="register-link">
+                                Chưa có tài khoản? <a href="#">Đăng ký ngay</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Page (Hidden by default, will be shown via JavaScript) -->
+            <div id="payment-page" style="display: none;">
+                <div class="container payment-container">
+                    <h2 class="section-title">Thanh toán</h2>
+
+                    <div class="payment-info">
+                        <div class="booking-summary">
+                            <h3>Thông tin đặt vé</h3>
+                            <div class="summary-item">
+                                <span>Tuyến đường:</span>
+                                <span>Hà Nội - Đà Nẵng</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Ngày đi:</span>
+                                <span>15/04/2025</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Giờ khởi hành:</span>
+                                <span>08:00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Số ghế:</span>
+                                <span>2</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Giá vé:</span>
+                                <span>800.000 VNĐ x 2</span>
+                            </div>
+                            <div class="total-price">
+                                Tổng cộng: 1.600.000 VNĐ
+                            </div>
+                        </div>
+
+                        <div class="payment-form">
+                            <h3>Thông tin thanh toán</h3>
+                            <form id="payment-form">
+                                <div class="input-group">
+                                    <label for="cardholder">Tên chủ thẻ</label>
+                                    <input type="text" id="cardholder" required>
+                                </div>
+
+                                <div class="payment-card">
+                                    <div class="input-group card-number">
+                                        <label for="card-number">Số thẻ</label>
+                                        <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
+                                    </div>
+
+                                    <div class="card-inputs">
+                                        <div class="input-group card-expiry">
+                                            <label for="expiry">Ngày hết hạn (MM/YY)</label>
+                                            <input type="text" id="expiry" placeholder="MM/YY" required>
+                                        </div>
+                                        <div class="input-group card-cvv">
+                                            <label for="cvv">CVV</label>
+                                            <input type="text" id="cvv" placeholder="XXX" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="complete-payment">
+                                    <button type="submit" class="login-btn">Hoàn tất thanh toán</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+                <div class="container">
+                    <div class="footer-content">
+                        <div class="footer-logo">
+                            <span>🚌</span> Bus Ticket Travel
+                        </div>
+                        <div class="footer-links">
+                            <div class="footer-column">
+                                <h3>Liên kết nhanh</h3>
+                                <ul>
+                                    <li><a href="index.html">Trang chủ</a></li>
+                                    <li><a href="lichtrinh.html">Lịch trình</a></li>
+                                    <li><a href="gioithieu.html">Giới thiệu</a></li>
+                                    <li><a href="lienhe.html">Liên hệ</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer-column">
+                                <h3>Hỗ trợ</h3>
+                                <ul>
+                                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                                    <li><a href="#">Chính sách hoàn vé</a></li>
+                                    <li><a href="#">Điều khoản sử dụng</a></li>
+                                    <li><a href="#">Chính sách bảo mật</a></li>
+                                </ul>
+                            </div>
+                            <div class="footer-column">
+                                <h3>Liên hệ</h3>
+                                <ul class="contact-info">
+                                    <li>&#128205; 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                                    <li>&#128222; 1900 xxxx</li>
+                                    <li>&#128231; support@busticket.vn</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; Bản quyền thuộc về Group 7</p>
+                    </div>
+                </div>
+            </footer>
+            <script th:src="@{/js/authorize.js}"></script>
+            <script th:src="@{/js/jsquery.js}"></script>
+        </body>
+    </html>
