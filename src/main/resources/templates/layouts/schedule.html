@@ -9,6 +9,7 @@
         <script th:src="@{/js/cusor.js}"></script>
         <script th:src="@{/js/payment.js}"></script>
         <link rel="icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
+        <link rel="stylesheet" th:href="@{/css/state.css}">
     </head>
     <body>
         <!-- Header -->
@@ -23,7 +24,7 @@
                     <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
                     <li><a href="#lien-he">Liên hệ</a></li>
                     <li><a href="#tro-giup">Trợ giúp</a></li>
-                    <li><a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a></li>
+                    <li id="state__login"><a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a></li>
                 </ul>
             </div>
         </header>
@@ -188,10 +189,10 @@
                         <div class="footer-column">
                             <h3>Liên kết nhanh</h3>
                             <ul>
-                                <li><a href="index.html">Trang chủ</a></li>
-                                <li><a href="lichtrinh.html">Lịch trình</a></li>
-                                <li><a href="gioithieu.html">Giới thiệu</a></li>
-                                <li><a href="lienhe.html">Liên hệ</a></li>
+                                <li><a href="/busbooking/busticket/homepage" class="active">Trang chủ</a></li>
+                                <li><a href="/busbooking/busticket/schedule">Lịch trình</a></li>
+                                <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
+                                <li><a href="#lien-he">Liên hệ</a></li>
                             </ul>
                         </div>
                         <div class="footer-column">
@@ -299,5 +300,6 @@
                 </div>
             </div>
             <script th:src="@{/js/jsquery.js}"></script>
+            <script th:src="@{/js/authorize.js}"></script>
         </body>
     </html>

@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Bus Ticket Travel - Giới Thiệu</title>
+        <link rel="stylesheet" th:href="@{/css/state.css}">
         <link rel="stylesheet" th:href="@{/css/header.css}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
         <script th:src="@{/js/cusor.js}"></script>
@@ -22,7 +23,7 @@
                     <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
                     <li><a href="#lien-he">Liên hệ</a></li>
                     <li><a href="#tro-giup">Trợ giúp</a></li>
-                    <li><a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a></li>
+                    <li id="state__login"><a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a></li>
                 </ul>
             </div>
         </header>
@@ -192,10 +193,10 @@
                             <div class="footer-column">
                                 <h3>Liên kết nhanh</h3>
                                 <ul>
-                                    <li><a href="index.html">Trang chủ</a></li>
-                                    <li><a href="lichtrinh.html">Lịch trình</a></li>
-                                    <li><a href="gioithieu.html">Giới thiệu</a></li>
-                                    <li><a href="lienhe.html">Liên hệ</a></li>
+                                    <li><a href="/busbooking/busticket/homepage" class="active">Trang chủ</a></li>
+                                    <li><a href="/busbooking/busticket/schedule">Lịch trình</a></li>
+                                    <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
+                                    <li><a href="#lien-he">Liên hệ</a></li>
                                 </ul>
                             </div>
                             <div class="footer-column">
@@ -226,20 +227,20 @@
             <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
             <!-- chạy slide -->
             <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var swiper = new Swiper('.swiper-container', {
-      loop: true, 
-      autoplay: {
-        delay: 3000, 
-        disableOnInteraction: false, 
-      },
-      slidesPerView: 1,
-      spaceBetween: 0,
-      grabCursor: true, 
-      effect: 'slide',
-    });
-  });
-</script>
-
+                document.addEventListener('DOMContentLoaded', function () {
+                    var swiper = new Swiper('.swiper-container', {
+                    loop: true, 
+                    autoplay: {
+                        delay: 3000, 
+                        disableOnInteraction: false, 
+                    },
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                    grabCursor: true, 
+                    effect: 'slide',
+                    });
+                });
+            </script>
+            <script th:src="@{/js/authorize.js}"></script>
         </body>
     </html>

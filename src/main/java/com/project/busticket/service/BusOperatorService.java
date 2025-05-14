@@ -67,4 +67,11 @@ public class BusOperatorService {
             return "Bus Operator has been deleted";
         }
     }
+
+    public String urlImgBusOperator(String id) {
+        BusOperatorResponse response = busOperatorMapper.toBusOperatorResponse(
+                busOperatorRepository.findById(id).orElseThrow(() -> new Appexception(ErrorCode.BUS_UN_EXISTED)));
+
+        return response.getImgUrl();
+    }
 }

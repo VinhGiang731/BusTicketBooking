@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Blue Sky Travel</title>
-  <link rel="stylesheet" href="./assets/css/adminstyle.css" />
-</head>
-<body>
-  <div class="admin-container">
-    <div class="sidebar">
-      <h2>🚌 Admin BTB</h2>
-      <ul>
-        <li><a href="#" onclick="loadContent('dashboard.html')">Tổng quan</a></li>
-        <li><a href="#" onclick="loadContent('busmanagement.html')">Quản lý chuyến xe</a></li>
-        <li><a href="#" onclick="loadContent('ticketmanagement.html')">Quản lý vé</a></li>
-        <li><a href="#" onclick="loadContent('usermanagement.html')">Quản lý người dùng</a></li>
-        <li><a href="#">Thống kê</a></li>
-      </ul>
-    </div>
-
-    <div class="main-content">
-      <div class="top-bar">
-        <div class="profile-menu" onclick="toggleProfileDropdown()">
-          <img src="https://i.ibb.co/4Z8Yz3B/user.png" alt="Admin Avatar" class="avatar" />
-          <span class="admin-name">Admin</span>
-          <div class="dropdown" id="profileDropdown">
-            <p><strong>Tài khoản:</strong> admin</p>
-            <p><strong>Email:</strong> admin@bluesky.vn</p>
-            <hr />
-            <button class="btn-logout" onclick="logout()">Đăng xuất</button>
-          </div>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Blue Sky Travel</title>
+    <link rel="stylesheet" th:href="@{/css/adminstyle.css}" />
+  </head>
+  <body>
+    <div class="admin-container">
+      <div class="sidebar">
+        <h2>🚌 Admin BTB</h2>
+        <ul>
+          <li><a href="#" onclick="loadContent('dashboard.html')">Tổng quan</a></li>
+          <li><a href="#" onclick="loadContent('busmanagement.html')">Quản lý chuyến xe</a></li>
+          <li><a href="#" onclick="loadContent('ticketmanagement.html')">Quản lý vé</a></li>
+          <li><a href="#" onclick="loadContent('usermanagement.html')">Quản lý người dùng</a></li>
+          <li><a href="#">Thống kê</a></li>
+        </ul>
       </div>
 
-      <div id="dynamic-content"></div>
-    </div>
-  </div>
+      <div class="main-content">
+        <div class="top-bar">
+          <div class="profile-menu" onclick="toggleProfileDropdown()">
+            <img src="https://i.ibb.co/4Z8Yz3B/user.png" alt="Admin Avatar" class="avatar" />
+            <span class="admin-name">Admin</span>
+            <div class="dropdown" id="profileDropdown">
+              <p><strong>Tài khoản:</strong> admin</p>
+              <p><strong>Email:</strong> admin@bluesky.vn</p>
+              <hr />
+              <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+            </div>
+          </div>
+        </div>
 
-  <script>
+        <div id="dynamic-content"></div>
+      </div>
+    </div>
+
+    <script>
     // ✅ Nếu chưa đăng nhập thì chuyển sang login
     if (!localStorage.getItem("isLoggedIn")) {
       window.location.href = "login.html";
@@ -93,5 +93,5 @@
     // ✅ Mặc định load dashboard khi vào admin
     window.onload = () => loadContent('dashboard.html');
   </script>
-</body>
+  </body>
 </html>

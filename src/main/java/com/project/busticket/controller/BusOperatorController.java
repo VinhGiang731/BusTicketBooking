@@ -41,6 +41,11 @@ public class BusOperatorController {
                 .build();
     }
 
+    @GetMapping("/img/{id}")
+    String getImg(@PathVariable String id) {
+        return service.urlImgBusOperator(id);
+    }
+
     @PutMapping("/update/{id}")
     ApiResponse<BusOperatorResponse> updateBusOperator(@PathVariable String id,
             @RequestBody @Valid BusOperatorRequest request) {

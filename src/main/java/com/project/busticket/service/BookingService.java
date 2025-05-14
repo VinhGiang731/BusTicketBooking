@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.busticket.dto.request.booking.BookingRequest;
 import com.project.busticket.dto.response.BookingDetailResponse;
-import com.project.busticket.dto.response.BookingResponse;
 import com.project.busticket.dto.response.BusOperatorResponse;
 import com.project.busticket.dto.response.TripResponse;
 import com.project.busticket.entity.Booking;
@@ -88,6 +87,7 @@ public class BookingService {
             detail.setToLocation(triprs.getToLocation());
             detail.setDeparturTime(triprs.getDeparturTime());
             detail.setArrivalTime(triprs.getArrivalTime());
+            detail.setSeats_number(bk.getSeats_number());
             detail.setBookingTime(bk.getBookingTime());
 
             bookingList.add(detail);
@@ -95,4 +95,5 @@ public class BookingService {
 
         return bookingList;
     }
+
 }

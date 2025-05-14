@@ -45,10 +45,55 @@ function loginEvent() {
             } catch (error) {
                 console.error('Error:', error);
             }
-        }
-        )
+        });
     }
     else console.log("not");
+}
+
+function signUpEvent() {
+    const frmSignUp = document.getElementById('frm-signup');
+    if (frmSignUp) {
+        frmSignUp.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const userName = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmpass = document.getElementById('confirmpass').value;
+
+            const create = {
+                "username": userName,
+                "email": email,
+                "phone": phone,
+                "password": password
+            }
+
+            if (password === confirmpass) {
+                try {
+                    fetch('http://localhost:8080/busbooking/users', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(loginData)
+                    })
+                        .then(result => result.json())
+                        .then(data => {
+                            if (data.ok && data.code === 0) {
+                                alert('System', 'Sign up successful');
+                            } else {
+                                alert('System', 'Sign up is incorrect');
+                            }
+                        })
+                        .catch(error => {
+                            alert('System', error);
+                        });
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {
