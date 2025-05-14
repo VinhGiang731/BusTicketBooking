@@ -13,33 +13,19 @@
         <img src="https://i.ibb.co/4Z8Yz3B/user.png" alt="Admin Avatar" class="avatar" />
         <h2>Đăng nhập Admin</h2>
       </div>
-      <form id="login-form">
+      <form id="frm-login">
         <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="adminuser" required />
+          <label>Username</label>
+          <input type="text" id="Username" placeholder="Username" required />
         </div>
         <div class="input-group">
-          <label for="password">Mật khẩu</label>
-          <input type="password" id="password" placeholder="••••••••" required />
+          <label>Password</label>
+          <input type="password" id="Password" placeholder="••••••••" required />
         </div>
         <button type="submit" class="login-btn">Đăng nhập</button>
       </form>
     </div>
 
-    <script>
-    document.getElementById("login-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (email === "locdeptrai@gmail.com" && password === "123456") {
-        localStorage.setItem("isLoggedIn", true);
-        window.location.href = "/busbooking/busticket/admin/home";
-      } else {
-        alert("Email hoặc mật khẩu không đúng!");
-      }
-    });
-  </script>
+    <script th:src="@{/js/admin/adminauthorize.js}"></script>
   </body>
 </html>

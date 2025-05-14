@@ -21,22 +21,11 @@ public class RunApplicationController {
         return "layouts/index";
     }
 
-    @GetMapping("/admin")
-    public String homeAdmin(HttpServletRequest request) {
-        return "admin/login";
-    }
-
-    @GetMapping("/admin/home")
-    public String adminPage(HttpServletRequest request) {
-        return "admin/admin";
-    }
-    // cmt
-
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("userName") != null) {
-            if (session.getAttribute("scope") == "USER") {
+            if ("USER".equals(session.getAttribute("scope"))) {
                 return "layouts/index";
             }
         }
@@ -61,5 +50,71 @@ public class RunApplicationController {
         rs.put("token", session != null ? session.getAttribute("token") : null);
         rs.put("scope", session != null ? session.getAttribute("scope") : null);
         return rs;
+    }
+
+    @GetMapping("/admin")
+    public String homeAdmin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("ADMIN".equals(session.getAttribute("scope"))) {
+                return "admin/admin";
+            }
+        }
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/home")
+    public String adminPage(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("ADMIN".equals(session.getAttribute("scope"))) {
+                return "admin/admin";
+            }
+        }
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/busmanage")
+    public String busManage(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("ADMIN".equals(session.getAttribute("scope"))) {
+                return "admin/busmanagement";
+            }
+        }
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/dashboard")
+    public String dashboard(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("ADMIN".equals(session.getAttribute("scope"))) {
+                return "admin/dashboard";
+            }
+        }
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/ticketmanage")
+    public String ticketManagement(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("ADMIN".equals(session.getAttribute("scope"))) {
+                return "admin/ticketmanagement";
+            }
+        }
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/usermanage")
+    public String userManagement(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("ADMIN".equals(session.getAttribute("scope"))) {
+                return "admin/usermanagement";
+            }
+        }
+        return "admin/login";
     }
 }

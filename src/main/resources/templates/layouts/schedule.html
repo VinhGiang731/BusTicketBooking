@@ -45,11 +45,11 @@
                     <form class="search-form">
                         <div class="form-group">
                             <label for="from"><i class="fas fa-map-marker-alt"></i> Điểm đi</label>
-                            <input type="text" id="from" placeholder="Chọn điểm xuất phát">
+                            <select class="select_outline" id="departure_select" required></select>
                         </div>
                         <div class="form-group">
                             <label for="to"><i class="fas fa-map-marker"></i> Điểm đến</label>
-                            <input type="text" id="to" placeholder="Chọn điểm đến">
+                            <select class="select_outline" id="arrival_select" required></select>
                         </div>
                         <div class="form-group">
                             <label for="date"><i class="far fa-calendar-alt"></i> Ngày đi</label>
@@ -301,5 +301,6 @@
             </div>
             <script th:src="@{/js/jsquery.js}"></script>
             <script th:src="@{/js/authorize.js}"></script>
+            <script th:src="@{/js/provinces.js}"></script>
         </body>
     </html>

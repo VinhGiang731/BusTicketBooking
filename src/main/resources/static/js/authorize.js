@@ -1,9 +1,25 @@
 // http://localhost:8080/busbooking/auth/login
-function loginEvent() {
+
+document.addEventListener('DOMContentLoaded', function () {
     const frmLogin = document.getElementById('frm-login')
+    const frmSignUp = document.getElementById('frm-signup');
+
+    const stateLogin = document.getElementById("state__login");
+
     if (frmLogin) {
+        loginEvent(frmLogin);
+    }
+    if (frmSignUp) {
+        signUpEvent(frmSignUp);
+    }
+    if (stateLogin) {
+        welcomeToU(stateLogin);
+    }
+})
+function loginEvent(form) {
+    if (form) {
         console.log("ok");
-        frmLogin.addEventListener('submit', async (event) => {
+        form.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             const userName = document.getElementById('Username').value;
@@ -36,7 +52,7 @@ function loginEvent() {
                             if (data.scope === 'USER') {
                                 window.location.href = "/busbooking/busticket/homepage";
                             } else {
-                                alert("ADMIN");
+                                window.location.href = "/busbooking/busticket/admin/home";
                             }
                         })
                 } else {
@@ -50,19 +66,18 @@ function loginEvent() {
     else console.log("not");
 }
 
-function signUpEvent() {
-    const frmSignUp = document.getElementById('frm-signup');
-    if (frmSignUp) {
-        frmSignUp.addEventListener('submit', async (event) => {
+function signUpEvent(form) {
+    if (form) {
+        form.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            const userName = document.getElementById('username').value;
-            const firstName = document.getElementById('firstname').value;
-            const lastName = document.getElementById('lastname').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-            const confirmpass = document.getElementById('confirmpass').value;
+            let userName = document.getElementById('userName').value.trim();
+            let firstName = document.getElementById('firstName').value.trim();
+            let lastName = document.getElementById('lastName').value.trim();
+            let email = document.getElementById('email').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            let password = document.getElementById('password').value.trim();
+            let confirmpass = document.getElementById('confirmpass').value.trim();
 
             if (password !== confirmpass) {
                 alert('Passwords do not match!');
@@ -78,40 +93,49 @@ function signUpEvent() {
                 phone: phone
             };
 
-            try {
-                const response = await fetch('http://localhost:8080/busbooking/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData)
-                });
+            const response = await fetch('http://localhost:8080/busbooking/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            });
 
-                const data = await response.json();
+            const data = await response.json();
 
-                if (response.ok && data.code === 0) {
-                    alert('Sign up successful');
-                } else {
-                    alert('Sign up failed: ' + (data.message || 'Unknown error'));
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred: ' + error.message);
+            if (response.ok && data.code === 1000) {
+                alert('Sign up successful');
+                userName = ''
+                firstName = ''
+                lastName = ''
+                email = ''
+                phone = ''
+                password = ''
+                confirmpass = ''
+
+            } else {
+                alert(`Notification: ${data.message}`);
+                return;
             }
+
         });
     }
+    return;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+
+})
+
+function welcomeToU(form) {
     fetch('http://localhost:8080/busbooking/busticket/session-info', {
         method: "GET",
         credentials: "include"
     })
         .then(result => result.json())
         .then(data => {
-            const stateLogin = document.getElementById("state__login");
             if (data.userName) {
-                stateLogin.innerHTML = ` 
+                form.innerHTML = ` 
                     <li class="user-dropdown">
                         <a href="" class="user-welcome">Welcome ${data.userName} ▼</a>
                         <div class="dropdown-content">
@@ -121,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     </li>
 `;
             } else {
-                stateLogin.innerHTML = `<a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a>`;
+                form.innerHTML = `<a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a>`;
             }
         })
-})
+}

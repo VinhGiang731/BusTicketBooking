@@ -11,87 +11,35 @@
       <div class="sidebar">
         <h2>🚌 Admin BTB</h2>
         <ul>
-          <li><a href="#" onclick="loadContent('dashboard.html')">Tổng quan</a></li>
-          <li><a href="#" onclick="loadContent('busmanagement.html')">Quản lý chuyến xe</a></li>
-          <li><a href="#" onclick="loadContent('ticketmanagement.html')">Quản lý vé</a></li>
-          <li><a href="#" onclick="loadContent('usermanagement.html')">Quản lý người dùng</a></li>
-          <li><a href="#">Thống kê</a></li>
+          <li class="active"><a href="#" data-target="dashboard">Tổng quan</a></li>
+          <li><a href="#" data-target="busmanage">Quản lý chuyến xe</a></li>
+          <li><a href="#" data-target="ticketmanage">Quản lý vé</a></li>
+          <li><a href="#" data-target="usermanage">Quản lý người dùng</a></li>
+          <li><a href="#" data-target="statistics">Thống kê</a></li>
         </ul>
       </div>
 
       <div class="main-content">
         <div class="top-bar">
-          <div class="profile-menu" onclick="toggleProfileDropdown()">
-            <img src="https://i.ibb.co/4Z8Yz3B/user.png" alt="Admin Avatar" class="avatar" />
-            <span class="admin-name">Admin</span>
-            <div class="dropdown" id="profileDropdown">
-              <p><strong>Tài khoản:</strong> admin</p>
-              <p><strong>Email:</strong> admin@bluesky.vn</p>
-              <hr />
-              <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+          <div class="profile-menu">
+            <img src="https://pbcdn1.podbean.com/imglogo/image-logo/4389756/picture-1-1505503146.png" alt="Admin Avatar"
+              class="avatar" />
+            <div id="state__login">
+              <p>Welcome: ?</p>
+              <button class="btn__logout">Đăng xuất</button>
             </div>
           </div>
         </div>
 
-        <div id="dynamic-content"></div>
+        <div id="dynamic-content">
+          <!-- insert layout -->
+          <div class="loading">
+            <h3>Welcome to system manage page</h3>
+          </div>
+        </div>
       </div>
     </div>
-
-    <script>
-    // ✅ Nếu chưa đăng nhập thì chuyển sang login
-    if (!localStorage.getItem("isLoggedIn")) {
-      window.location.href = "login.html";
-    }
-
-    function toggleProfileDropdown() {
-      const dropdown = document.getElementById("profileDropdown");
-      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-    }
-
-    window.addEventListener("click", function (e) {
-      const menu = document.querySelector(".profile-menu");
-      const dropdown = document.getElementById("profileDropdown");
-      if (!menu.contains(e.target)) {
-        dropdown.style.display = "none";
-      }
-    });
-
-    function loadContent(viewPath) {
-      fetch(viewPath)
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("dynamic-content").innerHTML = html;
-
-          // ✅ Gỡ script động cũ nếu có
-          const oldScript = document.getElementById("dynamic-script");
-          if (oldScript) {
-            oldScript.remove();
-          }
-
-          // ✅ Gắn script tương ứng nếu là trang có logic riêng
-          if (viewPath === "usermanagement.html") {
-            const script = document.createElement("script");
-            script.src = "assets/js/usermanagement.js";
-            script.id = "dynamic-script";
-            document.body.appendChild(script);
-          }
-
-          // Bạn có thể mở rộng cho các view khác tương tự:
-          // if (viewPath === "busmanagement.html") { ... }
-        })
-        .catch(err => {
-          document.getElementById("dynamic-content").innerHTML = "<p>Lỗi khi tải nội dung!</p>";
-          console.error(err);
-        });
-    }
-
-    function logout() {
-      localStorage.removeItem("isLoggedIn");
-      window.location.href = "login.html";
-    }
-
-    // ✅ Mặc định load dashboard khi vào admin
-    window.onload = () => loadContent('dashboard.html');
-  </script>
+    <script th:src="@{/js/admin/adminauthorize.js}"></script>
+    <script th:src="@{/js/admin/adminavigation.js}"></script>
   </body>
 </html>
