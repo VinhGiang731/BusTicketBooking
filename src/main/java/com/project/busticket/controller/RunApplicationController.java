@@ -21,6 +21,16 @@ public class RunApplicationController {
         return "layouts/index";
     }
 
+    @GetMapping("/admin")
+    public String homeAdmin(HttpServletRequest request) {
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/home")
+    public String adminPage(HttpServletRequest request) {
+        return "admin/admin";
+    }
+
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

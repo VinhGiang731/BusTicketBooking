@@ -55,42 +55,48 @@ function signUpEvent() {
     if (frmSignUp) {
         frmSignUp.addEventListener('submit', async (event) => {
             event.preventDefault();
+
             const userName = document.getElementById('username').value;
+            const firstName = document.getElementById('firstname').value;
+            const lastName = document.getElementById('lastname').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const confirmpass = document.getElementById('confirmpass').value;
 
-            const create = {
-                "username": userName,
-                "email": email,
-                "phone": phone,
-                "password": password
+            if (password !== confirmpass) {
+                alert('Passwords do not match!');
+                return;
             }
 
-            if (password === confirmpass) {
-                try {
-                    fetch('http://localhost:8080/busbooking/users', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(loginData)
-                    })
-                        .then(result => result.json())
-                        .then(data => {
-                            if (data.ok && data.code === 0) {
-                                alert('System', 'Sign up successful');
-                            } else {
-                                alert('System', 'Sign up is incorrect');
-                            }
-                        })
-                        .catch(error => {
-                            alert('System', error);
-                        });
-                } catch (error) {
-                    console.error('Error:', error);
+            const userData = {
+                userName: userName,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/busbooking/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.code === 0) {
+                    alert('Sign up successful');
+                } else {
+                    alert('Sign up failed: ' + (data.message || 'Unknown error'));
                 }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred: ' + error.message);
             }
         });
     }
