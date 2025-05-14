@@ -30,6 +30,7 @@ public class RunApplicationController {
     public String adminPage(HttpServletRequest request) {
         return "admin/admin";
     }
+    // cmt
 
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
