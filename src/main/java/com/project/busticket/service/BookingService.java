@@ -1,13 +1,14 @@
 package com.project.busticket.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.project.busticket.dto.request.booking.BookingRequest;
 import com.project.busticket.dto.response.BookingDetailResponse;
+import com.project.busticket.dto.response.BookingResponse;
 import com.project.busticket.dto.response.BusOperatorResponse;
 import com.project.busticket.dto.response.TripResponse;
 import com.project.busticket.entity.Booking;
@@ -22,6 +23,8 @@ import com.project.busticket.repository.BusOperatorRepository;
 import com.project.busticket.repository.TripRepository;
 import com.project.busticket.repository.UserRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -39,6 +42,7 @@ public class BookingService {
     TripMapper tripMapper;
     BusOperatorRepository busOperatorRepository;
     BusOperatorMapper busOperatorMapper;
+    HttpServletRequest httprequest;
 
     public Booking createBooking(BookingRequest request) {
         String userId = getUserId();
@@ -54,8 +58,9 @@ public class BookingService {
     }
 
     public String getUserId() {
-        var context = SecurityContextHolder.getContext();
-        String name = context.getAuthentication().getName();
+        HttpSession session = httprequest.getSession(false);
+
+        String name = session.getAttribute("userName").toString();
 
         User user = userRepository.findByUserName(name).orElseThrow(() -> new Appexception(ErrorCode.USER_NOT_EXISTED));
 
@@ -65,8 +70,10 @@ public class BookingService {
     public List<BookingDetailResponse> getListTicket() {
         List<BookingDetailResponse> bookingList = new ArrayList<>();
         String userId = getUserId();
+        log.info("Userlogin: {}", userId);
         List<Booking> booking = bookingRepository.findByUserId_UserId(userId);
 
+        log.info("Booking: {}", booking);
         if (booking.isEmpty())
             throw new Appexception(ErrorCode.UNCATEGORIZED_EXCEPTION);
 
@@ -96,4 +103,11 @@ public class BookingService {
         return bookingList;
     }
 
+    public BigDecimal totalPrices(String bookingId) {
+        BookingResponse booking = bookingMapper.toBookingResponse(bookingRepository.findByBookingId(bookingId));
+        TripResponse trip = tripMapper.toTripResponse(tripRepository.findByTripId(booking.getTripId())
+                .orElseThrow(() -> new Appexception(ErrorCode.TRIP_NOT_EXISTED)));
+
+        return trip.getPrice().multiply(BigDecimal.valueOf(booking.getSeats_number()));
+    }
 }

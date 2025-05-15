@@ -5,9 +5,10 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,8 +40,10 @@ public class TripRequest {
     LocalDateTime arrivalTime;
 
     @NotNull(message = "NOT_NULL")
-    @Pattern(regexp = "\\d+", message = "INVALID_NUMBER")
+    @DecimalMin(value = "0.0", inclusive = false, message = "INVALID_NUMBER")
     BigDecimal price;
+
     @NotNull(message = "NOT_NULL")
+    @Min(value = 1, message = "INVALID_NUMBER")
     Integer totalSeats;
 }

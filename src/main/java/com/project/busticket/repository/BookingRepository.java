@@ -14,5 +14,7 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
 
     boolean existsByTripId_TripId(String TripId);
 
+    Booking findByBookingId(String bookingId);
+
     List<Booking> findByUserId_UserId(String userId);
 }

@@ -19,5 +19,4 @@ public interface TripRepository extends JpaRepository<Trip, String> {
     boolean existsByDeparturTime(LocalDateTime departurTime);
 
     Optional<Trip> findByTripId(String tripId);
-
 }

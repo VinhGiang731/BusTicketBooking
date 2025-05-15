@@ -23,58 +23,60 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
-    private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
-            "/busticket/login",
-            "/busticket/schedule", "/busticket/introduce", "/busticket/session-info", "/busoperator/img/*" };
-    private final String[] STATIC_RESOURSE = { "/css/**", "/js/**", "/imgs/**", "/fonts/**", "/layouts/**",
-            "/admin/**" };
+        private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
+        private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
+                        "/busticket/login", "/busticket/payment/record",
+                        "/busticket/schedule", "/busticket/introduce", "/busticket/session-info",
+                        "/busoperator/img/*" };
+        private final String[] STATIC_RESOURSE = { "/css/**", "/js/**", "/imgs/**", "/fonts/**", "/layouts/**",
+                        "/admin/**" };
 
-    private final String[] ADMIN_ENPOINTS = { "/busticket/admin", "/busticket/admin/home", "/busticket/admin/busmanage",
-            "/busticket/admin/dashboard", "/busticket/admin/ticketmanage", "/busticket/admin/usermanage" };
+        private final String[] ADMIN_ENPOINTS = { "/busticket/admin", "/busticket/admin/home",
+                        "/busticket/admin/busmanage",
+                        "/busticket/admin/dashboard", "/busticket/admin/ticketmanage", "/busticket/admin/usermanage" };
 
-    @Value("${jwt.signerKey}")
-    protected String SIGNER_KEY;
+        @Value("${jwt.signerKey}")
+        protected String SIGNER_KEY;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(request -> request
-                .requestMatchers(HttpMethod.POST, PUBLIC_ENPOINTS_POST).permitAll()
-                .requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS_GET).permitAll()
-                .requestMatchers(HttpMethod.GET, STATIC_RESOURSE).permitAll()
-                .requestMatchers(HttpMethod.GET, ADMIN_ENPOINTS).permitAll()
-                .anyRequest().authenticated());
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+                httpSecurity.authorizeHttpRequests(request -> request
+                                .requestMatchers(HttpMethod.POST, PUBLIC_ENPOINTS_POST).permitAll()
+                                .requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS_GET).permitAll()
+                                .requestMatchers(HttpMethod.GET, STATIC_RESOURSE).permitAll()
+                                .requestMatchers(HttpMethod.GET, ADMIN_ENPOINTS).permitAll()
+                                .anyRequest().authenticated());
 
-        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(jwtConfigure -> jwtConfigure.decoder(jwtDecoder())
-                        .jwtAuthenticationConverter(jwtAuthenticationConverter())));
+                httpSecurity.oauth2ResourceServer(oauth2 -> oauth2
+                                .jwt(jwtConfigure -> jwtConfigure.decoder(jwtDecoder())
+                                                .jwtAuthenticationConverter(jwtAuthenticationConverter())));
 
-        httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        return httpSecurity.build();
-    }
+                httpSecurity.csrf(AbstractHttpConfigurer::disable);
+                return httpSecurity.build();
+        }
 
-    @Bean
-    JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        @Bean
+        JwtAuthenticationConverter jwtAuthenticationConverter() {
+                JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+                jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
 
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+                JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
 
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        return jwtAuthenticationConverter;
-    }
+                jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+                return jwtAuthenticationConverter;
+        }
 
-    @Bean
-    JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS521");
-        return NimbusJwtDecoder
-                .withSecretKey(secretKeySpec)
-                .macAlgorithm(MacAlgorithm.HS512)
-                .build();
-    }
+        @Bean
+        JwtDecoder jwtDecoder() {
+                SecretKeySpec secretKeySpec = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS521");
+                return NimbusJwtDecoder
+                                .withSecretKey(secretKeySpec)
+                                .macAlgorithm(MacAlgorithm.HS512)
+                                .build();
+        }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
+        @Bean
+        PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder(10);
+        }
 }
