@@ -19,5 +19,5 @@ public interface TripMapper {
     TripResponse toTripResponse(Trip trip);
 
     @Mapping(source = "busOperatorId", target = "busOperatorId.busOperatorId")
-    void updateInfo(@MappingTarget Trip trip, TripRequest request);
+    void updateInfo(@MappingTarget Trip trip, TripResponse request);
 }

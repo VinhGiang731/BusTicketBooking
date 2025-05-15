@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.project.busticket.dto.request.booking.BookingRequest;
 import com.project.busticket.dto.response.BookingDetailResponse;
-import com.project.busticket.dto.response.BookingResponse;
 import com.project.busticket.dto.response.BusOperatorResponse;
 import com.project.busticket.dto.response.TripResponse;
 import com.project.busticket.entity.Booking;
@@ -103,11 +102,8 @@ public class BookingService {
         return bookingList;
     }
 
-    public BigDecimal totalPrices(String bookingId) {
-        BookingResponse booking = bookingMapper.toBookingResponse(bookingRepository.findByBookingId(bookingId));
-        TripResponse trip = tripMapper.toTripResponse(tripRepository.findByTripId(booking.getTripId())
-                .orElseThrow(() -> new Appexception(ErrorCode.TRIP_NOT_EXISTED)));
-
-        return trip.getPrice().multiply(BigDecimal.valueOf(booking.getSeats_number()));
+    public BigDecimal totalPrices(BigDecimal price, Integer seats) {
+        return price.multiply(BigDecimal.valueOf(seats));
     }
+
 }

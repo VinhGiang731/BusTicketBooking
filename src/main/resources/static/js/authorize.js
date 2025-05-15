@@ -105,13 +105,7 @@ function signUpEvent(form) {
 
             if (response.ok && data.code === 1000) {
                 alert('Sign up successful');
-                userName = ''
-                firstName = ''
-                lastName = ''
-                email = ''
-                phone = ''
-                password = ''
-                confirmpass = ''
+                form.reset();
 
             } else {
                 alert(`Notification: ${data.message}`);
@@ -140,7 +134,7 @@ function welcomeToU(form) {
                         <a href="" class="user-welcome">Welcome ${data.userName} ▼</a>
                         <div class="dropdown-content">
                             <a href="profile.html">Profile</a>
-                            <a href="logout.html">Logout</a>
+                            <a href="/busbooking/busticket/logout">Logout</a>
                         </div>
                     </li>
 `;

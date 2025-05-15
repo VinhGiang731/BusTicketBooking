@@ -19,7 +19,8 @@ public enum ErrorCode {
     TRIP_INVALID(1012, "There should not be two buses from the same company at the same time"),
     TRIP_NOT_EXISTED(1013, "Trip not existed"),
 
-    INVALID_NUMBER(1014, "Must be a positive integer and least 1");
+    INVALID_NUMBER(1014, "Must be a positive integer and least 1"),
+    PAYMENT_FAILED(1015, "Some thing may be wrong"),;
 
     private int code;
     private String message;

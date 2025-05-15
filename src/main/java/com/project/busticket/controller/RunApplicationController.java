@@ -26,10 +26,16 @@ public class RunApplicationController {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("userName") != null) {
             if ("USER".equals(session.getAttribute("scope"))) {
-                return "layouts/index";
+
             }
         }
         return "layouts/login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "layouts/index";
     }
 
     @GetMapping("/schedule")
@@ -60,6 +66,11 @@ public class RunApplicationController {
                 return "admin/admin";
             }
         }
+        return "admin/login";
+    }
+
+    @GetMapping("/admin/logout")
+    public String adminLogout(HttpSession session) {
         return "admin/login";
     }
 

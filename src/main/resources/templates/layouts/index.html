@@ -7,6 +7,7 @@
         <link rel="stylesheet" th:href="@{/css/styles.css}">
         <link rel="stylesheet" th:href="@{/css/state.css}">
         <link rel="stylesheet" th:href="@{/css/header.css}">
+        <link rel="stylesheet" th:href="@{/css/payment.css}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <link rel="icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
         <script th:src="@{/js/cusor.js}"></script>
@@ -48,23 +49,11 @@
                             <div class="form-group">
                                 <label for="departure">Điểm đi</label>
                                 <select id="departure_select" required>
-                                    <!-- <option value>Chọn điểm đi</option>
-                                    <option value="hanoi">Hà Nội</option>
-                                    <option value="hcm">TP. Hồ Chí Minh</option>
-                                    <option value="danang">Đà Nẵng</option>
-                                    <option value="nhatrang">Nha Trang</option>
-                                    <option value="dalat">Đà Lạt</option> -->
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="arrival">Điểm đến</label>
                                 <select id="arrival_select" required>
-                                    <!-- <option value>Chọn điểm đến</option>
-                                    <option value="hanoi">Hà Nội</option>
-                                    <option value="hcm">TP. Hồ Chí Minh</option>
-                                    <option value="danang">Đà Nẵng</option>
-                                    <option value="nhatrang">Nha Trang</option>
-                                    <option value="dalat">Đà Lạt</option> -->
                                 </select>
                             </div>
                         </div>
@@ -88,7 +77,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="search-btn">Tìm chuyến xe</button>
+                        <input type="submit" class="btn-search search-btn" value="Tìm chuyến xe">
                     </form>
                 </div>
             </div>
@@ -122,106 +111,32 @@
                 <div class="container">
                     <h2 class="section-title">Gợi ý vé</h2>
                     <div class="route-cards">
-                        <!-- <div class="route-card">
-                            <div class="route-img" style="background-image: url('/imgs/xehn_dn.jpg');"></div>
-                            <div class="route-info">
-                                <h3>Hà Nội - Đà Nẵng</h3>
-                                <p>Thời gian di chuyển: 14 giờ</p>
-                                <p>Thời gian di chuyển: 14 giờ</p>
-                                <div class="route-price">800.000 VNĐ</div>
-                                <a href="/busbooking/busticket/schedule" class="route-btn book-btn">Đặt ngay</a>
-                            </div>
-                        </div>
-                        <div class="route-card">
-                            <div class="route-img" style="background-image: url('/imgs/xedl_sg.jpg');"></div>
-                            <div class="route-info">
-                                <h3>TP.HCM - Đà Lạt</h3>
-                                <p>Thời gian di chuyển: 7 giờ</p>
-                                <p>Thời gian di chuyển: 7 giờ</p>
-                                <div class="route-price">300.000 VNĐ</div>
-                                <a href="/busbooking/busticket/schedule" class="route-btn book-btn">Đặt ngay</a>
-                            </div>
-                        </div>
-                        <div class="route-card">
-                            <div class="route-img" style="background-image: url('/imgs/xehn_hl.jpg');"></div>
-                            <div class="route-info">
-                                <h3>Hà Nội - Hạ Long</h3>
-                                <p>Thời gian di chuyển: 3 giờ</p>
-                                <p>Thời gian di chuyển: 3 giờ</p>
-                                <div class="route-price">200.000 VNĐ</div>
-                                <a href="/busbooking/busticket/schedule" class="route-btn book-btn">Đặt ngay</a> </div>
-                        </div>
-                    </div> -->
                     </div>
                 </section>
             </div>
 
             <!-- Payment Page (Hidden by default, will be shown via JavaScript) -->
-            <div id="payment-page" style="display: none;">
-                <div class="container payment-container">
-                    <h2 class="section-title">Thanh toán</h2>
-
-                    <div class="payment-info">
-                        <div class="booking-summary">
-                            <h3>Thông tin đặt vé</h3>
-                            <div class="summary-item">
-                                <span>Tuyến đường:</span>
-                                <span>Hà Nội - Đà Nẵng</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Ngày đi:</span>
-                                <span>15/04/2025</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Giờ khởi hành:</span>
-                                <span>08:00</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Số ghế:</span>
-                                <span>2</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Giá vé:</span>
-                                <span>800.000 VNĐ x 2</span>
-                            </div>
-                            <div class="total-price">
-                                Tổng cộng: 1.600.000 VNĐ
-                            </div>
+            <div id="payment-modal" class="modal-overlay" style="display:none;">
+                <!-- <div class="modal-content">
+                    <h2>Xác nhận thanh toán</h2>
+                    <div class="payment-modal-flex">
+                        <div class="payment-info">
+                            <p><strong>Điểm đi:</strong> Hanoi</p>
+                            <p><strong>Điểm đến:</strong> Ho Chi Minh City</p>
+                            <p><strong>Giờ khởi hành:</strong> 2025-05-15 08:00</p>
+                            <p><strong>Giờ đến:</strong> 2025-05-15 20:00</p>
+                            <p><strong>Giá vé:</strong> 500,000 VNĐ</p>
+                            <p><strong>Số ghế còn lại:</strong> 40</p>
                         </div>
-
-                        <div class="payment-form">
-                            <h3>Thông tin thanh toán</h3>
-                            <form id="payment-form">
-                                <div class="input-group">
-                                    <label for="cardholder">Tên chủ thẻ</label>
-                                    <input type="text" id="cardholder" required>
-                                </div>
-
-                                <div class="payment-card">
-                                    <div class="input-group card-number">
-                                        <label for="card-number">Số thẻ</label>
-                                        <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
-                                    </div>
-
-                                    <div class="card-inputs">
-                                        <div class="input-group card-expiry">
-                                            <label for="expiry">Ngày hết hạn (MM/YY)</label>
-                                            <input type="text" id="expiry" placeholder="MM/YY" required>
-                                        </div>
-                                        <div class="input-group card-cvv">
-                                            <label for="cvv">CVV</label>
-                                            <input type="text" id="cvv" placeholder="XXX" required>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="complete-payment">
-                                    <button type="submit" class="login-btn">Hoàn tất thanh toán</button>
-                                </div>
-                            </form>
+                        <div class="payment-qr">
+                            <img
+                                src="https://api.vietqr.io/image/970423-88868088888-W2Fzq1W.jpg?accountName=Nguyen%20Van%20Cuong&amount=69000&addInfo=oapi%20vn%20free%20api"
+                                alt="QR Thanh toán"
+                                style="max-width:180px; width:100%; border-radius:12px; box-shadow:0 4px 16px #0002;">
                         </div>
                     </div>
-                </div>
+                    <button id="cancel-payment" class="cancel-btn-modal">Cancel</button>
+                </div> -->
             </div>
 
             <!-- Footer -->
@@ -268,5 +183,6 @@
             <script th:src="@{/js/authorize.js}"></script>
             <script th:src="@{/js/jsquery.js}"></script>
             <script th:src="@{/js/provinces.js}"></script>
+            <!-- <script th:src="@{/js/payment.js}"></script> -->
         </body>
     </html>

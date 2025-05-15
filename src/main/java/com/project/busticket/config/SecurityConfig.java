@@ -25,7 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
         private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
         private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
-                        "/busticket/login", "/busticket/payment/record",
+                        "/busticket/login", "/busticket/payment/record", "/busticket/logout", "/busticket/admin/logout",
                         "/busticket/schedule", "/busticket/introduce", "/busticket/session-info",
                         "/busoperator/img/*" };
         private final String[] STATIC_RESOURSE = { "/css/**", "/js/**", "/imgs/**", "/fonts/**", "/layouts/**",

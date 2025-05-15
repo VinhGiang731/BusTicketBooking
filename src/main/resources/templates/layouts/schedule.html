@@ -4,10 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Bus Ticket Travel - Lịch Trình</title>
+        <link rel="stylesheet" th:href="@{/css/payment.css}">
         <link rel="stylesheet" th:href="@{/css/schedule.css}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <script th:src="@{/js/cusor.js}"></script>
-        <script th:src="@{/js/payment.js}"></script>
         <link rel="icon" th:href="@{/imgs/favicon.ico}" type="image/x-icon">
         <link rel="stylesheet" th:href="@{/css/state.css}">
     </head>
@@ -55,7 +55,7 @@
                             <label for="date"><i class="far fa-calendar-alt"></i> Ngày đi</label>
                             <input type="date" id="date">
                         </div>
-                        <button type="submit" class="search-btn">Tìm chuyến</button>
+                        <input type="submit" id="frm-schedule-search" class="search-btn" value="Tìm chuyến xe">
                     </form>
                 </div>
             </div>
@@ -63,57 +63,9 @@
 
         <!-- Popular Routes -->
         <section class="routes-section">
-            <div class="container">
+            <div id="schedule__display" class="container">
                 <h2>Các tuyến phổ biến</h2>
                 <div class="routes-grid">
-                    <!-- <div class="route-card">
-                        <div class="route-info">
-                            <h3>Hà Nội - Hồ Chí Minh</h3>
-                            <p><i class="fas fa-clock"></i> 36 giờ</p>
-                            <p><i class="fas fa-bus"></i> 20+ chuyến mỗi ngày</p>
-                        </div>
-                        <td><a href="#" class="book-btn">Đặt vé</a></td>
-                    </div>
-                    <div class="route-card">
-                        <div class="route-info">
-                            <h3>Hà Nội - Đà Nẵng</h3>
-                            <p><i class="fas fa-clock"></i> 16 giờ</p>
-                            <p><i class="fas fa-bus"></i> 15+ chuyến mỗi ngày</p>
-                        </div>
-                        <td><a href="#" class="book-btn">Đặt vé</a></td>
-                    </div>
-                    <div class="route-card">
-                        <div class="route-info">
-                            <h3>Hồ Chí Minh - Đà Lạt</h3>
-                            <p><i class="fas fa-clock"></i> 8 giờ</p>
-                            <p><i class="fas fa-bus"></i> 12+ chuyến mỗi ngày</p>
-                        </div>
-                        <td><a href="#" class="book-btn">Đặt vé</a></td>
-                    </div>
-                    <div class="route-card">
-                        <div class="route-info">
-                            <h3>Hồ Chí Minh - Nha Trang</h3>
-                            <p><i class="fas fa-clock"></i> 10 giờ</p>
-                            <p><i class="fas fa-bus"></i> 10+ chuyến mỗi ngày</p>
-                        </div>
-                        <td><a href="#" class="book-btn">Đặt vé</a></td>
-                    </div>
-                    <div class="route-card">
-                        <div class="route-info">
-                            <h3>Hồ Chí Minh - Quảng Trị</h3>
-                            <p><i class="fas fa-clock"></i> 12 giờ</p>
-                            <p><i class="fas fa-bus"></i> 10+ chuyến mỗi ngày</p>
-                        </div>
-                        <td><a href="#" class="book-btn">Đặt vé</a></td>
-                    </div>
-                    <div class="route-card">
-                        <div class="route-info">
-                            <h3>Cà Mau - Đà Nẵng</h3>
-                            <p><i class="fas fa-clock"></i> 18 giờ</p>
-                            <p><i class="fas fa-bus"></i> 2 chuyến mỗi ngày</p>
-                        </div>
-                        <td><a href="#" class="book-btn">Đặt vé</a></td>
-                    </div>-->
                 </div>
             </div>
         </section>
@@ -121,7 +73,7 @@
         <!-- Schedule Table -->
         <section class="schedule-section">
             <div class="container">
-                <h2>Bảng lịch trình</h2>
+                <h2 id="table-trip">Bảng lịch trình</h2>
                 <div class="schedule-container">
                     <table class="schedule-table">
                         <thead>
@@ -135,44 +87,6 @@
                                 <th>Đặt vé</th>
                             </tr>
                         </thead>
-                        <!-- <tbody>
-                            <tr>
-                                <td>Hà Nội - Hải Phòng</td>
-                                <td>07:00</td>
-                                <td>09:30</td>
-                                <td>Hoàng Long</td>
-                                <td>150.000đ</td>
-                                <td>100</td>
-                                <td><a href="#" class="book-btn">Đặt vé</a></td>
-                            </tr>
-                            <tr>
-                                <td>Hà Nội - Hải Phòng</td>
-                                <td>09:00</td>
-                                <td>11:30</td>
-                                <td>Phương Trang</td>
-                                <td>150.000đ</td>
-                                <td>100</td>
-                                <td><a href="#" class="book-btn">Đặt vé</a></td>
-                            </tr>
-                            <tr>
-                                <td>Hồ Chí Minh - Vũng Tàu</td>
-                                <td>08:00</td>
-                                <td>11:00</td>
-                                <td>Thành Bưởi</td>
-                                <td>120.000đ</td>
-                                <td>100</td>
-                                <td><a href="#" class="book-btn">Đặt vé</a></td>
-                            </tr>
-                            <tr>
-                                <td>Hồ Chí Minh - Vũng Tàu</td>
-                                <td>14:00</td>
-                                <td>17:00</td>
-                                <td>Kumho</td>
-                                <td>120.000đ</td>
-                                <td>100</td>
-                                <td><a href="#" class="book-btn">Đặt vé</a></td>
-                            </tr>
-                        </tbody> -->
                     </table>
                 </div>
             </div>
@@ -220,87 +134,32 @@
             </div>
         </footer>
         <!-- Modal Đặt Vé -->
-        <div id="ticketModal" class="modal">
+        <div id="payment-modal" class="modal-overlay" style="display:none;">
             <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Xác nhận đặt vé</h2>
-                <div class="ticket-info">
-                    <div class="ticket-detail">
-                        <span>Tuyến đường:</span>
-                        <span id="route-info"></span>
+                <h2>Xác nhận thanh toán</h2>
+                <div class="payment-modal-flex">
+                    <div class="payment-info">
+                        <p><strong>Điểm đi:</strong> Hanoi</p>
+                        <p><strong>Điểm đến:</strong> Ho Chi Minh City</p>
+                        <p><strong>Giờ khởi hành:</strong> 2025-05-15 08:00</p>
+                        <p><strong>Giờ đến:</strong> 2025-05-15 20:00</p>
+                        <p><strong>Giá vé:</strong> 500,000 VNĐ</p>
+                        <p><strong>Số ghế còn lại:</strong> 40</p>
                     </div>
-                    <div class="ticket-detail">
-                        <span>Nhà xe:</span>
-                        <span id="company-info"></span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span>Giờ khởi hành:</span>
-                        <span id="departure-time"></span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span>Giờ đến:</span>
-                        <span id="arrival-time"></span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span>Giá vé:</span>
-                        <span id="ticket-price"></span>
+                    <div class="payment-qr">
+                        <img
+                            src="https://api.vietqr.io/image/970423-88868088888-W2Fzq1W.jpg?accountName=Nguyen%20Van%20Cuong&amount=69000&addInfo=oapi%20vn%20free%20api"
+                            alt="QR Thanh toán"
+                            style="max-width:180px; width:100%; border-radius:12px; box-shadow:0 4px 16px #0002;">
                     </div>
                 </div>
-
-                <form id="passenger-form">
-                    <h3>Thông tin hành khách</h3>
-                    <div class="form-group">
-                        <label for="passenger-name">Họ và tên:</label>
-                        <input type="text" id="passenger-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="passenger-phone">Số điện thoại:</label>
-                        <input type="tel" id="passenger-phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="passenger-email">Email:</label>
-                        <input type="email" id="passenger-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="ticket-quantity">Số lượng vé:</label>
-                        <input type="number" id="ticket-quantity" min="1" max="10" value="1" required>
-                    </div>
-                    <div class="form-group payment-methods">
-                        <label>Phương thức thanh toán:</label>
-                        <div class="radio-group">
-                            <label class="radio-group__option">
-                                <input type="radio" name="payment" class="radio-group__input" />
-                                <img th:src="@{/imgs/momo_vi.webp}" alt="MoMo" class="radio-group__icon" />
-                                <span class="radio-group__label">MoMo</span>
-                            </label>
-
-                            <label class="radio-group__option">
-                                <input type="radio" name="payment" class="radio-group__input" />
-                                <img th:src="@{/imgs/maqr.jpg}" alt="Chuyển khoản ngân hàng"
-                                    class="radio-group__icon" />
-                                <span class="radio-group__label">Chuyển khoản ngân hàng</span>
-                            </label>
-
-                            <label class="radio-group__option">
-                                <input type="radio" name="payment" class="radio-group__input" />
-                                <img th:src="@{/imgs/tienmat.jpg}" alt="Tiền mặt" class="radio-group__icon" />
-                                <span class="radio-group__label">Tiền mặt</span>
-                            </label>
-                        </div>
-
-                        <div class="ticket-total">
-                            <span>Tổng tiền:</span>
-                            <span id="total-amount"></span>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="cancel-btn">Hủy</button>
-                            <button type="submit" class="confirm-btn">Xác nhận đặt vé</button>
-                        </div>
-                    </form>
-                </div>
+                <button id="cancel-payment" class="cancel-btn-modal">Cancel</button>
             </div>
-            <script th:src="@{/js/jsquery.js}"></script>
-            <script th:src="@{/js/authorize.js}"></script>
-            <script th:src="@{/js/provinces.js}"></script>
-        </body>
-    </html>
+        </div>
+
+        <script th:src="@{/js/jsquery.js}"></script>
+        <script th:src="@{/js/authorize.js}"></script>
+        <script th:src="@{/js/provinces.js}"></script>
+        <!-- <script th:src="@{/js/payment.js}"></script> -->
+    </body>
+</html>

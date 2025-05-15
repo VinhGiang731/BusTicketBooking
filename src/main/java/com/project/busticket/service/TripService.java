@@ -46,6 +46,13 @@ public class TripService {
                 tripRepository.findById(id).orElseThrow(() -> new Appexception(ErrorCode.TRIP_NOT_EXISTED)));
     }
 
+    public TripResponse updateTrip(String tripId, TripResponse request) {
+        Trip trip = tripRepository.findByTripId(tripId).orElseThrow(() -> new Appexception(ErrorCode.TRIP_NOT_EXISTED));
+
+        tripMapper.updateInfo(trip, request);
+        return tripMapper.toTripResponse(tripRepository.save(trip));
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     public String deletdTrip(String id) {
         if (!tripRepository.existsById(id)) {
