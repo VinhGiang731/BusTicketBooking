@@ -23,7 +23,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-        private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
+        private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login", "/payment/server/send-message",
+                        "/payment/record" };
         private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
                         "/busticket/login", "/busticket/payment/record", "/busticket/logout", "/busticket/admin/logout",
                         "/busticket/check/login", "/ws",

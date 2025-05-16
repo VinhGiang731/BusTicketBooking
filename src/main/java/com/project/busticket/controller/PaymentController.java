@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,9 @@ import com.project.busticket.service.PaymentService;
 public class PaymentController {
     @Autowired
     PaymentService service;
+
+    @Autowired
+    SimpMessagingTemplate simpMessagingTemplate;
 
     @PostMapping("/record")
     ApiResponse<Map<String, Object>> createPayment(@RequestBody PaymentRequest request) {
@@ -41,5 +45,10 @@ public class PaymentController {
         return ApiResponse.<BigDecimal>builder()
                 .result(service.getTotalAmount())
                 .build();
+    }
+
+    @PostMapping("/server/send-message")
+    public void sendMessage(@RequestBody PaymentRequest request) {
+        simpMessagingTemplate.convertAndSend("/topic/notification", request);
     }
 }

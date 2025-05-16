@@ -1,3 +1,4 @@
+var amountPayment;
 const socket = new SockJS('/busbooking/ws')
 const stompClient = Stomp.over(socket);
 
@@ -7,9 +8,36 @@ stompClient.connect({}, function (frame) {
     stompClient.subscribe('/topic/notification', function (messageOutput) {
         const message = JSON.parse(messageOutput.body);
         console.log("Received message: ", message);
-        alert('Có thông báo');
-    });
 
+        const json = {
+            "bookingId": localStorage.getItem('bookingId')
+        }
+
+        console.log(json);
+
+        if (parseFloat(message.amount) === parseFloat(amountPayment)) {
+            fetch('http://localhost:8080/busbooking/payment/record', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(json)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 0) {
+                        alert('Bạn đã thanh toán thành công');
+                        window.location.href = "/busbooking/busticket/homepage";
+                    }
+                })
+        } else {
+            alert('Số tiền thanh toán bị sai, vui lòng liên hệ hotline để được hoàn tiền!!!');
+            window.location.href = "/busbooking/busticket/homepage";
+
+        }
+
+        localStorage.removeItem('bookingId');
+    });
 });
 
 const listTrip = [];
@@ -132,29 +160,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Đảm bảo chỉ gán 1 lần, không bị mất khi innerHTML
-    const modal = document.getElementById('payment-modal');
-    if (modal) {
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    }
+    // const modal = document.getElementById('payment-modal');
+    // if (modal) {
+    //     modal.addEventListener('click', function (e) {
+    //         if (e.target === modal) {
+    //             modal.style.display = 'none';
+    //         }
+    //     });
+    // }
 });
 
 function disPlayHintTrip(trip, routeCards) {
     const card = document.createElement("div")
     card.className = "route-card";
     card.innerHTML = `
-                           <div class="route-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6j-RnaTlCeJ3XTwmeZ3UUZ5u7aSb_9qryXw&s')"></div>
-                            <div class="route-info">
-                                <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
-                                <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
-                                <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
-                                <div class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</div>
-                                <p>Số ghế: ${trip.totalSeats}</p>
-                                <button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button>
-                            </div>
+                        <div class="route-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6j-RnaTlCeJ3XTwmeZ3UUZ5u7aSb_9qryXw&s')"></div>
+                        <div class="route-info">
+                            <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
+                            <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
+                            <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
+                            <div class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</div>
+                            <p>Số ghế: ${trip.totalSeats}</p>
+                            <button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button>
+                        </div>
                     `;
     routeCards.appendChild(card);
 }
@@ -352,17 +380,20 @@ function openPaymentModal(trip) {
 
 
                 const dataBooking = await createBooking.json();
+                console.log(dataBooking);
 
                 if (createBooking.ok && dataBooking.code === 0) {
                     const qrBlock = document.getElementById('payment-qr-block');
                     const imgQR = document.getElementById('img__qr');
 
                     const totalPrice = parseFloat(trip.price) * parseFloat(seatsNumber);
-                    imgQR.src = `https://api.vietqr.io/image/970405-2008206211037-W2Fzq1W.jpg?accountName=Dinh%Vinh%20Giang&amount=${totalPrice}&addInfo=Group7%20CDIO%20bank%20`
+                    window.amountPayment = totalPrice;
 
+                    imgQR.src = `https://api.vietqr.io/image/970405-2008206211037-W2Fzq1W.jpg?accountName=Dinh%Vinh%20Giang&amount=${totalPrice}&addInfo=Group7%20CDIO%20bank%20`;
 
                     if (qrBlock) qrBlock.style.display = 'flex';
                     payBtn.style.display = 'none';
+                    localStorage.setItem('bookingId', dataBooking.result.bookingId);
                 } else {
                     layoutPayment.style.display = 'none';
                     alert('Không thể đặt vé, vui lòng thử lại!');
@@ -373,6 +404,7 @@ function openPaymentModal(trip) {
                                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                             }
                         })
+
                     } catch (err) {
 
                     }
