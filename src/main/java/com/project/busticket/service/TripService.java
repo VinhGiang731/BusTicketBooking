@@ -62,4 +62,11 @@ public class TripService {
             return "Trip has been deleted";
         }
     }
+
+    public Boolean checkSeats(String tripId, Integer seats) {
+        Trip trip = tripRepository.findByTripId(tripId).orElseThrow(() -> new Appexception(ErrorCode.TRIP_NOT_EXISTED));
+        if (seats > trip.getTotalSeats())
+            return false;
+        return true;
+    }
 }

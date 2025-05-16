@@ -1,3 +1,17 @@
+const socket = new SockJS('/busbooking/ws')
+const stompClient = Stomp.over(socket);
+
+stompClient.connect({}, function (frame) {
+    console.log('Connected: ' + frame);
+
+    stompClient.subscribe('/topic/notification', function (messageOutput) {
+        const message = JSON.parse(messageOutput.body);
+        console.log("Received message: ", message);
+        alert('Có thông báo');
+    });
+
+});
+
 const listTrip = [];
 document.addEventListener("DOMContentLoaded", function () {
     //http://localhost:8080/busbooking/trip
@@ -24,42 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 var i = 0;
                 if (routeCards) {
                     i = 0;
+                    //fun routeCards
                     data.result.slice(0, 3).forEach(trip => {
                         if (i === 3) return;
-                        const card = document.createElement("div")
-                        card.className = "route-card";
-                        card.innerHTML = `
-                           <div class="route-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6j-RnaTlCeJ3XTwmeZ3UUZ5u7aSb_9qryXw&s')"></div>
-                            <div class="route-info">
-                                <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
-                                <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
-                                <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
-                                <div class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</div>
-                                <p>Số ghế: ${trip.totalSeats}</p>
-                                <button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button>
-                            </div>
-                        `;
-                        routeCards.appendChild(card);
+                        disPlayHintTrip(trip, routeCards);
                         i++;
                     })
                 }
 
-
                 if (routesGrid) {
                     i = 0;
+                    //fun routesGrid
                     data.result.slice(0, 6).forEach(trip => {
                         if (i === 7) return;
-                        const card = document.createElement("div")
-                        card.className = "route-card";
-                        card.innerHTML = `
-                            <div class="route-info">
-                                <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
-                                 <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
-                                <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
-                            </div>
-                            <td><button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button></td>
-                        `;
-                        routesGrid.appendChild(card);
+                        disPlayTripSchedule(trip, routesGrid);
                         i++;
                     })
                 }
@@ -125,10 +117,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Add event delegation for book buttons
-    document.addEventListener('click', function (e) {
+    document.addEventListener('click', async function (e) {
         if (e.target.classList.contains('book-btn')) {
             const tripData = JSON.parse(e.target.getAttribute('data-trip'));
-            openPaymentModal(tripData);
+            let response = await fetch('http://localhost:8080/busbooking/busticket/check/login');
+
+            let state = await response.json();
+            if (state.state === true) {
+                openPaymentModal(tripData);
+            } else {
+                alert('Vui lòng login để book vé!');
+            }
         }
     });
 
@@ -142,6 +141,39 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+function disPlayHintTrip(trip, routeCards) {
+    const card = document.createElement("div")
+    card.className = "route-card";
+    card.innerHTML = `
+                           <div class="route-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6j-RnaTlCeJ3XTwmeZ3UUZ5u7aSb_9qryXw&s')"></div>
+                            <div class="route-info">
+                                <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
+                                <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
+                                <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
+                                <div class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</div>
+                                <p>Số ghế: ${trip.totalSeats}</p>
+                                <button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button>
+                            </div>
+                    `;
+    routeCards.appendChild(card);
+}
+
+function disPlayTripSchedule(trip, routesGrid) {
+    const card = document.createElement("div")
+    card.className = "route-card";
+    card.innerHTML = `
+                            <div class="route-info">
+                                <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
+                                 <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
+                                <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
+                                <p class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</p>
+                                <p>Số ghế: ${trip.totalSeats}</p>
+                            </div>
+                            <td><button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button></td>
+                        `;
+    routesGrid.appendChild(card);
+}
 
 function searching(data) {
     const departureSelect = document.getElementById('departure_select');
@@ -264,15 +296,18 @@ function openPaymentModal(trip) {
                             <p><strong>Giờ đến:</strong> ${new Date(trip.arrivalTime).toLocaleString()}</p>
                             <p><strong>Giá vé:</strong> ${trip.price.toLocaleString()} VNĐ</p>
                             <p><strong>Số ghế còn lại:</strong> ${trip.totalSeats}</p>
+                            <input id="ticket-quantity" class="input-ticket-quantity" type="number" min="1" max="${trip.totalSeats}" placeholder="Nhập số lượng vé" />
                         </div>
-                        <div class="payment-qr">
-                            <img
-                                src="https://api.vietqr.io/image/970423-88868088888-W2Fzq1W.jpg?accountName=Nguyen%20Van%20Cuong&amount=${trip.price}&addInfo=oapi%20vn%20free%20api"
+                        <div class="payment-qr" id="payment-qr-block" style="display:none;">
+                            <img id="img__qr"
                                 alt="QR Thanh toán"
-                                style="max-width:180px; width:100%; border-radius:12px; box-shadow:0 4px 16px #0002;">
+                                style="max-width:200px; width:100%; border-radius:12px; box-shadow:0 4px 16px #0002;">
                         </div>
                     </div>
-                    <button id="cancel-payment" class="cancel-btn-modal">Cancel</button>
+                    <div class="payment-modal-actions">
+                        <button id="pay-btn" class="pay-btn-modal">Thanh toán</button>
+                        <button id="cancel-payment" class="cancel-btn-modal">Cancel</button>
+                    </div>
                 </div>`;
 
     // Add click event for cancel button
@@ -280,6 +315,84 @@ function openPaymentModal(trip) {
     if (cancelBtn) {
         cancelBtn.addEventListener('click', function () {
             layoutPayment.style.display = 'none';
+        });
+    }
+    // Add click event for pay button
+    const payBtn = document.getElementById('pay-btn');
+    if (payBtn) {
+        payBtn.addEventListener('click', async function () {
+            const userConfirm = confirm('Bạn có chắc muốn đặt vé?');
+            if (userConfirm) {
+                const userResponse = await fetch('http://localhost:8080/busbooking/users/myinfo', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const seatsNumber = +document.getElementById('ticket-quantity').value;
+
+                const requestBooking = {
+                    "tripId": trip.tripId,
+                    "seats_number": seatsNumber,
+                }
+
+                console.log(requestBooking);
+                console.log(localStorage.getItem('token'));
+
+                const createBooking = await fetch('http://localhost:8080/busbooking/booking', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBooking)
+                });
+
+
+                const dataBooking = await createBooking.json();
+
+                if (createBooking.ok && dataBooking.code === 0) {
+                    const qrBlock = document.getElementById('payment-qr-block');
+                    const imgQR = document.getElementById('img__qr');
+
+                    const totalPrice = parseFloat(trip.price) * parseFloat(seatsNumber);
+                    imgQR.src = `https://api.vietqr.io/image/970405-2008206211037-W2Fzq1W.jpg?accountName=Dinh%Vinh%20Giang&amount=${totalPrice}&addInfo=Group7%20CDIO%20bank%20`
+
+
+                    if (qrBlock) qrBlock.style.display = 'flex';
+                    payBtn.style.display = 'none';
+                } else {
+                    layoutPayment.style.display = 'none';
+                    alert('Không thể đặt vé, vui lòng thử lại!');
+                    try {
+                        fetch(`http://localhost:8080/busbooking/booking/delete/${dataBooking.result.bookingId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                            }
+                        })
+                    } catch (err) {
+
+                    }
+                    layoutPayment.style.display = 'none';
+                }
+
+                cancelBtn.addEventListener('click', function () {
+                    fetch(`http://localhost:8080/busbooking/booking/delete/${dataBooking.result.bookingId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        }
+                    })
+                    layoutPayment.style.display = 'none';
+                });
+
+            } else {
+                layoutPayment.style.display = 'none';
+            }
+
         });
     }
 }

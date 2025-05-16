@@ -26,7 +26,7 @@ public class RunApplicationController {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("userName") != null) {
             if ("USER".equals(session.getAttribute("scope"))) {
-
+                return "layouts/index";
             }
         }
         return "layouts/login";
@@ -71,6 +71,7 @@ public class RunApplicationController {
 
     @GetMapping("/admin/logout")
     public String adminLogout(HttpSession session) {
+        session.invalidate();
         return "admin/login";
     }
 
@@ -127,5 +128,20 @@ public class RunApplicationController {
             }
         }
         return "admin/login";
+    }
+
+    @RequestMapping("/check/login")
+    @ResponseBody
+    public Map<String, Boolean> checkLogin(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        Map<String, Boolean> rs = new HashMap<>();
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("USER".equals(session.getAttribute("scope"))) {
+                rs.put("state", true);
+                return rs;
+            }
+        }
+        rs.put("state", false);
+        return rs;
     }
 }

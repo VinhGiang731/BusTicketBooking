@@ -96,7 +96,6 @@ header {
 
 /* Hero Section */
 .hero {
-    background-image: url('/api/placeholder/1200/600');
     background-size: cover;
     background-position: center;
     height: 500px;

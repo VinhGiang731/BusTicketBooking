@@ -14,14 +14,18 @@
  .modal-content {
      background: #fff;
      border-radius: 18px;
-     padding: 36px 32px 64px 32px;
+     padding: 36px 32px 32px 32px;
      min-width: 340px;
-     max-width: 120vw;
+     max-width: 95vw;
      box-shadow: 0 8px 40px #0004, 0 1.5px 8px #0001;
      text-align: left;
      position: relative;
      animation: modalFadeIn 0.25s;
-     height: 455px;
+     max-height: 95vh;
+     height: auto;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
  }
 
  @keyframes modalFadeIn {
@@ -49,6 +53,9 @@
      font-size: 1.08rem;
      color: #222;
      line-height: 1.5;
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-start;
  }
 
  .payment-info p {
@@ -88,7 +95,8 @@
  @media (max-width: 600px) {
      .modal-content {
          min-width: 95vw;
-         padding: 16px 8px 56px 8px;
+         padding: 16px 8px 16px 8px;
+         max-height: 98vh;
      }
 
      .payment-modal-flex {
@@ -126,4 +134,71 @@
      background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
      box-shadow: 0 4px 16px #2196f344;
      transform: translateY(-2px) scale(1.03);
+ }
+
+ .input-ticket-quantity {
+     width: 100%;
+     padding: 10px 14px;
+     margin: 12px 0 0 0;
+     border: 1.5px solid #1976d2;
+     border-radius: 8px;
+     font-size: 1.08rem;
+     color: #222;
+     background: #f7fbff;
+     outline: none;
+     transition: border 0.2s, box-shadow 0.2s;
+     box-sizing: border-box;
+     font-weight: 500;
+ }
+
+ .input-ticket-quantity:focus {
+     border: 2px solid #21cbf3;
+     box-shadow: 0 2px 8px #21cbf322;
+     background: #fff;
+ }
+
+ .payment-modal-actions {
+     display: flex;
+     gap: 16px;
+     justify-content: center;
+     align-items: center;
+     margin-top: 24px;
+ }
+
+ .pay-btn-modal {
+     background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+     color: #fff;
+     border: none;
+     border-radius: 24px;
+     font-size: 1.08rem;
+     font-weight: 600;
+     box-shadow: 0 2px 8px #43e97b33;
+     cursor: pointer;
+     transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+     outline: none;
+     padding: 10px 36px;
+ }
+
+ .pay-btn-modal:hover,
+ .pay-btn-modal:focus {
+     background: linear-gradient(90deg, #11998e 0%, #38f9d7 100%);
+     box-shadow: 0 4px 16px #43e97b44;
+     transform: translateY(-2px) scale(1.03);
+ }
+
+ .payment-modal-actions .pay-btn-modal,
+ .payment-modal-actions .cancel-btn-modal {
+     position: static;
+     margin: 0;
+     min-width: 120px;
+     width: auto;
+ }
+
+ @media (max-width: 600px) {
+
+     .payment-modal-actions .pay-btn-modal,
+     .payment-modal-actions .cancel-btn-modal {
+         width: 100%;
+         min-width: unset;
+     }
  }

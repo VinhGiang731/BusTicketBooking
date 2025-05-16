@@ -26,7 +26,9 @@ public class SecurityConfig {
         private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login" };
         private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
                         "/busticket/login", "/busticket/payment/record", "/busticket/logout", "/busticket/admin/logout",
+                        "/busticket/check/login", "/ws",
                         "/busticket/schedule", "/busticket/introduce", "/busticket/session-info",
+                        "/busticket/user/myinfo", "/send-message", "/topic/notification",
                         "/busoperator/img/*" };
         private final String[] STATIC_RESOURSE = { "/css/**", "/js/**", "/imgs/**", "/fonts/**", "/layouts/**",
                         "/admin/**" };
@@ -45,6 +47,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS_GET).permitAll()
                                 .requestMatchers(HttpMethod.GET, STATIC_RESOURSE).permitAll()
                                 .requestMatchers(HttpMethod.GET, ADMIN_ENPOINTS).permitAll()
+                                .requestMatchers(HttpMethod.GET, "/ws/**").permitAll()
                                 .anyRequest().authenticated());
 
                 httpSecurity.oauth2ResourceServer(oauth2 -> oauth2

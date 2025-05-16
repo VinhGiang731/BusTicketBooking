@@ -137,7 +137,8 @@ function welcomeToU(form) {
                             <a href="/busbooking/busticket/logout">Logout</a>
                         </div>
                     </li>
-`;
+                    `;
+                localStorage.setItem('token', data.token);
             } else {
                 form.innerHTML = `<a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a>`;
             }

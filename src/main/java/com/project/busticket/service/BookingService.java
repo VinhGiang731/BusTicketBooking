@@ -49,11 +49,20 @@ public class BookingService {
         log.info("userid {}", userId);
         if (!userRepository.existsByUserId(userId))
             throw new Appexception(ErrorCode.USER_NOT_EXISTED);
-        if (!bookingRepository.existsByTripId_TripId(request.getTripId()))
+        if (!tripRepository.existsById(request.getTripId()))
             throw new Appexception(ErrorCode.TRIP_NOT_EXISTED);
 
         Booking booking = bookingMapper.toBooking(request);
         return bookingRepository.save(booking);
+    }
+
+    public String deletedBooking(String id) {
+        if (!bookingRepository.existsById(id)) {
+            return "Booking not found";
+        } else {
+            bookingRepository.deleteById(id);
+            return "Booking deleted";
+        }
     }
 
     public String getUserId() {
