@@ -1,3 +1,4 @@
+var cancelBtn;
 var amountPayment;
 const socket = new SockJS('/busbooking/ws')
 const stompClient = Stomp.over(socket);
@@ -31,6 +32,7 @@ stompClient.connect({}, function (frame) {
                     }
                 })
         } else {
+            cancelBtn.click();
             alert('Số tiền thanh toán bị sai, vui lòng liên hệ hotline để được hoàn tiền!!!');
             window.location.href = "/busbooking/busticket/homepage";
 
@@ -158,32 +160,37 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-
-    // Đảm bảo chỉ gán 1 lần, không bị mất khi innerHTML
-    // const modal = document.getElementById('payment-modal');
-    // if (modal) {
-    //     modal.addEventListener('click', function (e) {
-    //         if (e.target === modal) {
-    //             modal.style.display = 'none';
-    //         }
-    //     });
-    // }
 });
 
-function disPlayHintTrip(trip, routeCards) {
-    const card = document.createElement("div")
+async function disPlayHintTrip(trip, routeCards) {
+    const card = document.createElement("div");
     card.className = "route-card";
+
+    let imageUrl = "https://via.placeholder.com/150"; // ảnh mặc định nếu lỗi
+
+    try {
+        const res = await fetch(`http://localhost:8080/busbooking/busoperator/img/${trip.busOperatorId}`);
+        if (res.ok) {
+            imageUrl = await res.text(); // lấy chuỗi URL ảnh
+        } else {
+            console.warn("Không thể lấy ảnh, status:", res.status);
+        }
+    } catch (error) {
+        console.error("Lỗi gọi API ảnh:", error);
+    }
+
     card.innerHTML = `
-                        <div class="route-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6j-RnaTlCeJ3XTwmeZ3UUZ5u7aSb_9qryXw&s')"></div>
-                        <div class="route-info">
-                            <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
-                            <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
-                            <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
-                            <div class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</div>
-                            <p>Số ghế: ${trip.totalSeats}</p>
-                            <button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button>
-                        </div>
-                    `;
+        <div class="route-img" style="background-image: url('${imageUrl}')"></div>
+        <div class="route-info">
+            <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
+            <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
+            <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
+            <div class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</div>
+            <p>Số ghế: ${trip.totalSeats}</p>
+            <button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button>
+        </div>
+    `;
+
     routeCards.appendChild(card);
 }
 
@@ -191,14 +198,14 @@ function disPlayTripSchedule(trip, routesGrid) {
     const card = document.createElement("div")
     card.className = "route-card";
     card.innerHTML = `
-                            <div class="route-info">
-                                <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
-                                 <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
-                                <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
-                                <p class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</p>
-                                <p>Số ghế: ${trip.totalSeats}</p>
-                            </div>
-                            <td><button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button></td>
+                        <div class="route-info">
+                            <h3>${trip.fromLocation} - ${trip.toLocation}</h3>
+                            <p>Khởi hành: ${new Date(trip.departurTime).toLocaleString()}</p>
+                            <p>Đến nơi: ${new Date(trip.arrivalTime).toLocaleString()}</p>
+                            <p class="route-price">Giá vé: ${trip.price.toLocaleString()} VNĐ</p>
+                            <p>Số ghế: ${trip.totalSeats}</p>
+                        </div>
+                        <td><button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button></td>
                         `;
     routesGrid.appendChild(card);
 }
@@ -284,25 +291,77 @@ function disPlaySearch(dataFilter, scheduleTable) {
     });
 }
 
+let allTrips = [];
+const TRIPS_PER_PAGE = 10;
+
 function disPlay(i, data, scheduleTable) {
-    i = 0;
-    data.result.slice(0, 10).forEach(trip => {
-        if (i === 10) return;
-        const tbody = document.createElement("tbody")
+    allTrips = Array.isArray(data.result) ? data.result : [];
+    renderTripsPage(1, scheduleTable);
+}
+
+async function renderTripsPage(page, scheduleTable) {
+    scheduleTable.innerHTML = `<thead>
+        <tr>
+            <th>Tuyến đường</th>
+            <th>Giờ khởi hành</th>
+            <th>Giờ đến</th>
+            <th>Nhà xe</th>
+            <th>Giá vé</th>
+            <th>Số Lượng</th>
+            <th>Đặt vé</th>
+        </tr>
+    </thead>`;
+
+    const startIdx = (page - 1) * TRIPS_PER_PAGE;
+    const endIdx = startIdx + TRIPS_PER_PAGE;
+    const tripsToShow = allTrips.slice(startIdx, endIdx);
+
+    for (const trip of tripsToShow) {
+        let busOperatorName = 'Không xác định';
+
+        try {
+            const res = await fetch(`http://localhost:8080/busbooking/busoperator/name/${trip.busOperatorId}`);
+            if (res.ok) {
+                busOperatorName = await res.text();
+            }
+        } catch (err) {
+            console.error(`Lỗi lấy tên nhà xe cho tripId=${trip.tripId}`, err);
+        }
+
+        const tbody = document.createElement("tbody");
         tbody.innerHTML = `
             <tr>
                 <td>${trip.fromLocation} - ${trip.toLocation}</td>
                 <td>${new Date(trip.departurTime).toLocaleString()}</td>
                 <td>${new Date(trip.arrivalTime).toLocaleString()}</td>
-                <td>Hoàng Long</td>
-                <td>${trip.price}VND</td>
+                <td>${busOperatorName}</td>
+                <td>${trip.price.toLocaleString()} VND</td>
                 <td>${trip.totalSeats}</td>
                 <td><button class="route-btn book-btn" type="button" data-trip='${JSON.stringify(trip)}'>Đặt ngay</button></td>
             </tr>
         `;
         scheduleTable.appendChild(tbody);
-        i++;
-    });
+    }
+    renderTripsPagination(page, scheduleTable);
+}
+
+function renderTripsPagination(currentPage, scheduleTable) {
+    let paginationDiv = document.getElementById('trips-pagination');
+    if (!paginationDiv) {
+        paginationDiv = document.createElement('div');
+        paginationDiv.id = 'trips-pagination';
+        paginationDiv.className = 'pagination-bar';
+        scheduleTable.parentNode.appendChild(paginationDiv);
+    }
+    paginationDiv.innerHTML = '';
+    const totalPages = Math.ceil(allTrips.length / TRIPS_PER_PAGE);
+    for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.textContent = i;
+        pageBtn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+        pageBtn.addEventListener('click', () => renderTripsPage(i, scheduleTable));
+        paginationDiv.appendChild(pageBtn);
+    }
 }
 
 function openPaymentModal(trip) {
@@ -314,7 +373,7 @@ function openPaymentModal(trip) {
     const layoutPayment = document.getElementById('payment-modal')
     layoutPayment.style.display = 'flex';
 
-    layoutPayment.innerHTML = ` <div class="modal-content">
+    layoutPayment.innerHTML = ` <div div class="modal-content" >
                     <h2>Xác nhận thanh toán</h2>
                     <div class="payment-modal-flex">
                         <div class="payment-info">
@@ -324,7 +383,7 @@ function openPaymentModal(trip) {
                             <p><strong>Giờ đến:</strong> ${new Date(trip.arrivalTime).toLocaleString()}</p>
                             <p><strong>Giá vé:</strong> ${trip.price.toLocaleString()} VNĐ</p>
                             <p><strong>Số ghế còn lại:</strong> ${trip.totalSeats}</p>
-                            <input id="ticket-quantity" class="input-ticket-quantity" type="number" min="1" max="${trip.totalSeats}" placeholder="Nhập số lượng vé" />
+                            <input id="ticket-quantity" class="input-ticket-quantity" type="number" min="1" max="${trip.totalSeats}" value ="1" placeholder="Nhập số lượng vé" />
                         </div>
                         <div class="payment-qr" id="payment-qr-block" style="display:none;">
                             <img id="img__qr"
@@ -336,10 +395,10 @@ function openPaymentModal(trip) {
                         <button id="pay-btn" class="pay-btn-modal">Thanh toán</button>
                         <button id="cancel-payment" class="cancel-btn-modal">Cancel</button>
                     </div>
-                </div>`;
+                </div > `;
 
     // Add click event for cancel button
-    const cancelBtn = document.getElementById('cancel-payment');
+    cancelBtn = document.getElementById('cancel-payment');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', function () {
             layoutPayment.style.display = 'none';
@@ -354,7 +413,7 @@ function openPaymentModal(trip) {
                 const userResponse = await fetch('http://localhost:8080/busbooking/users/myinfo', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Authorization': `Bearer ${localStorage.getItem('token')} `,
                         'Content-Type': 'application/json'
                     }
                 });
@@ -372,7 +431,7 @@ function openPaymentModal(trip) {
                 const createBooking = await fetch('http://localhost:8080/busbooking/booking', {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Authorization': `Bearer ${localStorage.getItem('token')} `,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(requestBooking)
@@ -404,7 +463,6 @@ function openPaymentModal(trip) {
                                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                             }
                         })
-
                     } catch (err) {
 
                     }

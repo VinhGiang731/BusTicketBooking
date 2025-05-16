@@ -74,4 +74,11 @@ public class BusOperatorService {
 
         return response.getImgUrl();
     }
+
+    public String busOperatorName(String id) {
+        BusOperatorResponse response = busOperatorMapper.toBusOperatorResponse(
+                busOperatorRepository.findById(id).orElseThrow(() -> new Appexception(ErrorCode.BUS_UN_EXISTED)));
+
+        return response.getBusOperatorName();
+    }
 }

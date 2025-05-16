@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile - Bus Ticket Travel</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/profile.css}">
+        <link rel="stylesheet" th:href="@{/css/styles.css}">
+        <link rel="stylesheet" th:href="@{/css/state.css}">
+        <link rel="stylesheet" th:href="@{/css/header.css}">
+        <link rel="stylesheet" th:href="@{/css/payment.css}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+    <body>
+
+        <header>
+            <div class="container header-container">
+                <div class="logo">
+                    <a href="/busbooking/busticket/homepage"><span>🚌</span> Bus Ticket Travel</a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/busbooking/busticket/homepage" class="active">Trang chủ</a></li>
+                    <li><a href="/busbooking/busticket/schedule">Lịch trình</a></li>
+                    <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
+                    <li><a href="#lien-he">Liên hệ</a></li>
+                    <li><a href="#tro-giup">Trợ giúp</a></li>
+                    <li id="state__login"><a href="/busbooking/busticket/login" class="login-btn">Đăng nhập</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 class="profile-title">Thông tin tài khoản</h2>
+                    <p>Quản lý thông tin cá nhân của bạn</p>
+                </div>
+
+                <!-- Display Profile Info -->
+                <div class="profile-info" id="profile-display">
+                    <div class="info-group">
+                        <div class="info-label"><i class="fas fa-user-tag"></i> Họ:</div>
+                        <div class="info-value" id="firstName">V.Giang</div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info-label"><i class="fas fa-signature"></i> Tên:</div>
+                        <div class="info-value" id="lastName">Dinh</div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info-label"><i class="fas fa-envelope"></i> Email:</div>
+                        <div class="info-value" id="email">dinhvinhgiang345@gmail.com</div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info-label"><i class="fas fa-phone-alt"></i> Số điện thoại:</div>
+                        <div class="info-value" id="phone">0935943938</div>
+                    </div>
+
+                    <button class="edit-profile-btn" id="edit-btn"><i class="fas fa-edit"></i> Chỉnh sửa thông
+                        tin</button>
+                    <button class="edit-profile-btn" id="view-bookings-btn"><i class="fas fa-ticket-alt"></i> Xem vé đã
+                        book</button>
+                </div>
+
+                <!-- Booked Tickets Display (Hidden by default) -->
+                <div class="booked-tickets" id="booked-tickets" style="display: none;">
+                    <h3>Vé đã đặt</h3>
+                    <div id="bookings-list">
+                        <!-- Bookings will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Edit Profile Form (Hidden by default) -->
+                <div class="profile-edit-form" id="profile-edit" style="display: none;">
+                    <form id="edit-profile-form">
+                        <div class="form-group">
+                            <label for="edit-firstName"><i class="fas fa-user-tag"></i> Họ:</label>
+                            <input type="text" id="edit-firstName" name="firstName" value="V.Giang" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-lastName"><i class="fas fa-signature"></i> Tên:</label>
+                            <input type="text" id="edit-lastName" name="lastName" value="Dinh" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-email"><i class="fas fa-envelope"></i> Email:</label>
+                            <input type="email" id="edit-email" name="email" value="dinhvinhgiang345@gmail.com"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-phone"><i class="fas fa-phone-alt"></i> Số điện thoại:</label>
+                            <input type="tel" id="edit-phone" name="phone" value="0935943938" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn" id="cancel-edit-btn"><i class="fas fa-times"></i>
+                                Hủy</button>
+                            <button type="submit" class="save-btn"><i class="fas fa-save"></i> Lưu thay đổi</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success Message (Hidden by default) -->
+                <div class="success-message" id="success-message" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Thông tin đã được cập nhật thành công!</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <span>🚌</span> Bus Ticket Travel
+                    </div>
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h3>Liên kết nhanh</h3>
+                            <ul>
+                                <li><a href="/busbooking/busticket/homepage" class="active">Trang chủ</a></li>
+                                <li><a href="/busbooking/busticket/schedule">Lịch trình</a></li>
+                                <li><a href="/busbooking/busticket/introduce">Giới thiệu</a></li>
+                                <li><a href="#lien-he">Liên hệ</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h3>Hỗ trợ</h3>
+                            <ul>
+                                <li><a href="#">Câu hỏi thường gặp</a></li>
+                                <li><a href="#">Chính sách hoàn vé</a></li>
+                                <li><a href="#">Điều khoản sử dụng</a></li>
+                                <li><a href="#">Chính sách bảo mật</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h3>Liên hệ</h3>
+                            <ul class="contact-info">
+                                <li>&#128205; 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                                <li>&#128222; 1900 xxxx</li>
+                                <li>&#128231; support@busticket.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; Bản quyền thuộc về Group 7</p>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script th:src="@{/js/profile.js}"></script>
+        <script th:src="@{/js/authorize.js}"></script>
+        <script th:src="@{/js/jsquery.js}"></script>
+    </body>
+</html>

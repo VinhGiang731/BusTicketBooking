@@ -48,6 +48,17 @@ public class RunApplicationController {
         return "layouts/introduce";
     }
 
+    @GetMapping("/profile")
+    public String profile(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("userName") != null) {
+            if ("USER".equals(session.getAttribute("scope"))) {
+                return "layouts/profile";
+            }
+        }
+        return "layouts/login";
+    }
+
     @GetMapping("/session-info")
     @ResponseBody
     public Map<String, Object> getSessionInf(HttpSession session) {

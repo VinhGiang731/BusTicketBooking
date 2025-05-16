@@ -26,11 +26,12 @@ public class SecurityConfig {
         private final String[] PUBLIC_ENPOINTS_POST = { "/users", "/auth/login", "/payment/server/send-message",
                         "/payment/record" };
         private final String[] PUBLIC_ENPOINTS_GET = { "/busoperator", "/trip", "/busticket/homepage",
+                        "/busticket/profile",
                         "/busticket/login", "/busticket/payment/record", "/busticket/logout", "/busticket/admin/logout",
                         "/busticket/check/login", "/ws",
                         "/busticket/schedule", "/busticket/introduce", "/busticket/session-info",
                         "/busticket/user/myinfo", "/send-message", "/topic/notification",
-                        "/busoperator/img/*" };
+                        "/busoperator/img/*", "/busoperator/name/*" };
         private final String[] STATIC_RESOURSE = { "/css/**", "/js/**", "/imgs/**", "/fonts/**", "/layouts/**",
                         "/admin/**" };
 

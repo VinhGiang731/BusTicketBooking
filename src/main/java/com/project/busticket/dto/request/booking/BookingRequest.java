@@ -27,5 +27,5 @@ public class BookingRequest {
     Integer seats_number;
 
     @NotNull(message = "NOT_NULL")
-    LocalDateTime bookingTime = LocalDateTime.now();;
+    LocalDateTime bookingTime = LocalDateTime.now();
 }

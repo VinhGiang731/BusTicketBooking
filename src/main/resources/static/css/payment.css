@@ -149,6 +149,7 @@
      transition: border 0.2s, box-shadow 0.2s;
      box-sizing: border-box;
      font-weight: 500;
+     caret-color: black;
  }
 
  .input-ticket-quantity:focus {
@@ -201,4 +202,12 @@
          width: 100%;
          min-width: unset;
      }
+ }
+
+ .input-ticket-quantity {
+     color: black;
+ }
+
+ .input-ticket-quantity::placeholder {
+     color: gray;
  }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.project.busticket.dto.request.booking.BookingRequest;
@@ -77,7 +78,12 @@ public class BookingService {
 
     public List<BookingDetailResponse> getListTicket() {
         List<BookingDetailResponse> bookingList = new ArrayList<>();
-        String userId = getUserId();
+        var context = SecurityContextHolder.getContext();
+        String name = context.getAuthentication().getName();
+
+        User user = userRepository.findByUserName(name).orElseThrow(() -> new Appexception(ErrorCode.USER_NOT_EXISTED));
+
+        String userId = user.getUserId();
         log.info("Userlogin: {}", userId);
         List<Booking> booking = bookingRepository.findByUserId_UserId(userId);
 

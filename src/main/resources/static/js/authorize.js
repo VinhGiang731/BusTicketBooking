@@ -133,7 +133,7 @@ function welcomeToU(form) {
                     <li class="user-dropdown">
                         <a href="" class="user-welcome">Welcome ${data.userName} ▼</a>
                         <div class="dropdown-content">
-                            <a href="profile.html">Profile</a>
+                            <a href="/busbooking/busticket/profile">Profile</a>
                             <a href="/busbooking/busticket/logout">Logout</a>
                         </div>
                     </li>
