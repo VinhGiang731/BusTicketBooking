@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ApplicationInitConfig {
     PasswordEncoder passwordEncoder;
 
+    // tôi đang ở nhánh vgiang
     @Bean
     ApplicationRunner applicationRunner(UserRepository repository) {
         return args -> {
