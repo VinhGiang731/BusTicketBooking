@@ -24,6 +24,7 @@ public class ApplicationInitConfig {
     PasswordEncoder passwordEncoder;
 
     // tôi đang ở nhánh vgiang
+    // đây là cmt thứ 2
     @Bean
     ApplicationRunner applicationRunner(UserRepository repository) {
         return args -> {
