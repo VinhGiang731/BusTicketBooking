@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  mysql-master:
+    image: mysql:8.0
+    container_name: mysql-master
+    environment:
+      - MYSQL_ROOT_PASSWORD=31072004
+      - MYSQL_DATABASE=busticket
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-master:/var/lib/mysql
+      - ./master.cnf:/etc/mysql/conf.d/master.cnf # xoá dòng này dùng dùng dưới nếu lỗi không tìm thấy file master.cnf
+      # command: --server-id=1 --log-bin=mysql-bin
+    networks:
+      - mysql-network
+
+  mysql-slave:
+    image: mysql:8.0
+    container_name: mysql-slave
+    environment:
+      - MYSQL_ROOT_PASSWORD=31072004
+      - MYSQL_DATABASE=busticket
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql-slave:/var/lib/mysql
+      - ./slave.cnf:/etc/mysql/conf.d/slave.cnf # xoá dòng này dùng dùng dưới nếu lỗi không tìm thấy file slave.cnf
+    #  command: --server-id=2 --relay-log=mysql-relay-bin --read-only=1
+    depends_on:
+      - mysql-master
+    networks:
+      - mysql-network
+
+networks:
+  mysql-network:
+    driver: bridge

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Blue Sky Travel</title>
+    <link rel="stylesheet" th:href="@{/css/admin/adminstyle.css}" />
+
+  </head>
+  <body>
+    <div class="admin-container">
+      <div class="sidebar">
+        <h2>🚌 Admin BTB</h2>
+        <ul>
+          <li class="active"><a href="#" data-target="dashboard">Tổng quan</a></li>
+          <li><a href="#" data-target="busmanage">Quản lý chuyến xe</a></li>
+          <li><a href="#" data-target="ticketmanage">Quản lý vé</a></li>
+          <li><a href="#" data-target="usermanage">Quản lý người dùng</a></li>
+          <li><a href="#" data-target="statistics">Thống kê</a></li>
+        </ul>
+      </div>
+
+      <div class="main-content">
+        <div class="top-bar">
+          <div class="profile-menu">
+            <img src="https://pbcdn1.podbean.com/imglogo/image-logo/4389756/picture-1-1505503146.png" alt="Admin Avatar"
+              class="avatar" />
+            <div id="state__login">
+              <p>Welcome: ?</p>
+              <button class="btn__logout">Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="dynamic-content">
+          <!-- insert layout -->
+          <div class="loading">
+            <h3>Welcome to system manage page</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script th:src="@{/js/admin/adminauthorize.js}"></script>
+    <script th:src="@{/js/admin/adminnavigation.js}"></script>
+  </body>
+</html>

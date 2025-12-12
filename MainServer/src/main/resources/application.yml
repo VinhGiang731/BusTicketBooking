@@ -1,0 +1,43 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /busbooking
+    session:
+      timeout: 0
+
+spring:
+  datasource:
+    mysql:
+      url: jdbc:mysql://localhost:3306/busticket
+      username: root
+      password: 31072004
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  cache:
+    type: caffeine
+    cache-names: userTickets, bookingDetails, trips, busOperators
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=10m
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+custom:
+  datasource:
+    mysql:
+      url: jdbc:mysql://localhost:3307/busticket
+      username: root
+      password: 31072004
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  cache:
+    type: caffeine
+    cache-names: userTickets, bookingDetails, trips, busOperators
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=10m
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+jwt:
+  signerKey: Ze1v7U6gUNcuZN3/EvrQd8QLtImxnvMvb4UynpjRy8kL0Sjmcsy+0H1m980WgfgP

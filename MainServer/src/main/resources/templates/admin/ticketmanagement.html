@@ -1,0 +1,74 @@
+<h1>Quản lý vé</h1>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>ID Người mua</th>
+        <th>ID Chuyến xe</th>
+        <th>Số ghế</th>
+        <th>Thời gian đặt vé</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2001</td>
+        <td>USR1001</td>
+        <td>101</td>
+        <td>12A</td>
+        <td>2025-04-08 10:15</td>
+      </tr>
+      <tr>
+        <td>2002</td>
+        <td>USR1003</td>
+        <td>102</td>
+        <td>08B</td>
+        <td>2025-04-08 11:45</td>
+      </tr>
+      <!-- Thêm nhiều dòng tại đây -->
+    </tbody>
+  </table>
+</div>
+
+<style>
+  :root {
+    --gradient: linear-gradient(135deg, #1a73e8, #64b5f6, #42a5f5);
+    --main-color: #1a73e8;
+  }
+
+  .table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  th {
+    background: var(--gradient);
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+  }
+
+  tr:hover {
+    background-color: #f2f9ff;
+  }
+</style>
