@@ -1,0 +1,187 @@
+<h1>Quản lý người dùng</h1>
+
+<!-- Nút thêm -->
+<button class="add-user-btn" onclick="openUserModal()">
+    Thêm
+</button>
+
+<!-- Modal Thêm người dùng -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeUserModal()">&times;</span>
+        <h2>Thêm người dùng</h2>
+        <form id="userForm">
+            <input type="text" id="new-id" placeholder="ID" required>
+            <input type="text" id="new-first" placeholder="Họ" required>
+            <input type="text" id="new-last" placeholder="Tên" required>
+            <input type="email" id="new-email" placeholder="Email" required>
+            <input type="tel" id="new-phone" placeholder="Số điện thoại" required>
+            <div class="form-actions">
+                <button type="button" class="cancel-btn" onclick="closeUserModal()">Hủy</button>
+                <button type="submit" class="confirm-btn">Thêm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-container">
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ</th>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>USR001</td>
+                <td>Nguyễn</td>
+                <td>An</td>
+                <td>nguyenan@gmail.com</td>
+                <td>0901234567</td>
+            </tr>
+            <tr>
+                <td>USR002</td>
+                <td>Trần</td>
+                <td>Mai</td>
+                <td>tranmai@gmail.com</td>
+                <td>0987654321</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    :root {
+        --gradient: linear-gradient(135deg, #1a73e8, #64b5f6, #42a5f5);
+        --main-color: #1a73e8;
+    }
+
+    .add-user-btn {
+        background: var(--gradient);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 10px;
+        margin: 10px 0 20px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .add-user-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+        color: var(--main-color);
+    }
+
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box; /* Đảm bảo không bị thừa ra ngoài */
+        text-align: left; /* Căn trái nội dung trong input */
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .confirm-btn {
+        background-color: var(--main-color);
+        color: white;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .cancel-btn {
+        background-color: #aaa;
+        color: white;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .close {
+        position: absolute;
+        right: 16px;
+        top: 12px;
+        font-size: 22px;
+        cursor: pointer;
+        color: #aaa;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    th {
+        background: var(--gradient);
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+        color: #333;
+    }
+
+    tr:hover {
+        background-color: #f2f9ff;
+    }
+</style>
+<script th:href="@{/js/admin/usermanagement.js}"></script>

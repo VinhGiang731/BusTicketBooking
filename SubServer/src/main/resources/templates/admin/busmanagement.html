@@ -1,0 +1,83 @@
+<h1>Quản lý chuyến xe</h1>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>ID Nhà Xe</th>
+        <th>Điểm đi</th>
+        <th>Điểm đến</th>
+        <th>Giờ khởi hành</th>
+        <th>Giờ đến</th>
+        <th>Giá vé (VNĐ)</th>
+        <th>Số ghế</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>101</td>
+        <td>OP001</td>
+        <td>Hà Nội</td>
+        <td>Đà Nẵng</td>
+        <td>2025-04-10 08:00</td>
+        <td>2025-04-10 22:00</td>
+        <td>800000</td>
+        <td>40</td>
+      </tr>
+      <tr>
+        <td>102</td>
+        <td>OP002</td>
+        <td>TP.HCM</td>
+        <td>Đà Lạt</td>
+        <td>2025-04-11 07:00</td>
+        <td>2025-04-11 14:00</td>
+        <td>300000</td>
+        <td>36</td>
+      </tr>
+      <!-- Bạn có thể thêm nhiều dòng ở đây -->
+    </tbody>
+  </table>
+</div>
+
+<style>
+  
+  :root {
+    --gradient: linear-gradient(135deg, #1a73e8, #64b5f6, #42a5f5);
+    --main-color: #1a73e8;
+  }
+
+  .table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  th {
+    background: var(--gradient);
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+  }
+
+  tr:hover {
+    background-color: #f2f9ff;
+  }
+</style>
