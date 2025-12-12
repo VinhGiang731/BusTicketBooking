@@ -1,0 +1,225 @@
+# ============================================
+# IDE & Editor
+# ============================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+.classpath
+.project
+.settings/
+*.iml
+*.iws
+*.ipr
+*.sublime-project
+*.sublime-workspace
+.netbeans/
+
+
+# ============================================
+# Build & Dependencies
+# ============================================
+target/
+build/
+dist/
+node_modules/
+.gradle/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+!mvnw.jar
+
+
+# ============================================
+# Java & Maven
+# ============================================
+*.class
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+*.log
+logs/
+*.stackdump
+.factorypath
+*.jks
+*.keystore
+
+
+# ============================================
+# Application Configuration (SENSITIVE)
+# ============================================
+# Never commit configuration files with sensitive data
+MainServer/src/main/resources/application.yml
+MainServer/src/main/resources/application-*.yml
+SubServer/src/main/resources/application.yml
+SubServer/src/main/resources/application-*.yml
+
+# Database configuration
+application-dev.yml
+application-prod.yml
+application-test.yml
+application-local.yml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+
+# ============================================
+# Database & Runtime
+# ============================================
+mysql_replication/mysql-master/
+mysql_replication/mysql-slave/
+*.db
+*.sqlite
+*.sqlite3
+*.h2.db
+dbstore/
+
+
+# ============================================
+# Python
+# ============================================
+DataFaker/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+
+
+# ============================================
+# OS Specific
+# ============================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+.directory
+
+
+# ============================================
+# Version Control
+# ============================================
+.git/
+.gitmodules
+.hg/
+.hgignore
+.svn/
+*.orig
+
+
+# ============================================
+# Test Coverage
+# ============================================
+coverage/
+jacoco.xml
+.coverage
+htmlcov/
+.pytest_cache/
+.hypothesis/
+
+
+# ============================================
+# Docker
+# ============================================
+docker-compose.override.yml
+.dockerignore
+
+
+# ============================================
+# Temporary Files
+# ============================================
+*.tmp
+*.bak
+*.backup
+*.swp
+*.swo
+*~
+.#*
+#*#
+temp/
+tmp/
+
+
+# ============================================
+# Security Keys & Credentials
+# ============================================
+*.pem
+*.key
+*.jks
+*.p12
+*.p8
+*.pfx
+private_key
+public_key
+secrets/
+credentials/
+
+
+# ============================================
+# IDE Generated Files
+# ============================================
+.metadata
+.recommenders
+.classpath
+.project
+.settings
+*.iml
+*.aar
+
+
+# ============================================
+# Node & Frontend Build
+# ============================================
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+.angular/
+.next/
+
+
+# ============================================
+# MacOS specific
+# ============================================
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+._*
+

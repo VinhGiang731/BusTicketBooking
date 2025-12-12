@@ -1,0 +1,177 @@
+# ============================================
+# BusTicketBooking - SubServer Configuration
+# ============================================
+# IMPORTANT: Copy this file to application.yml and update values for your environment
+# DO NOT commit application.yml to version control
+# ============================================
+
+spring:
+  application:
+    name: busticket-sub-server
+  
+  # ============================================
+  # Database Configuration
+  # ============================================
+  datasource:
+    url: jdbc:mysql://localhost:3306/busticket?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: your_password_here
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # ============================================
+  # JPA / Hibernate Configuration
+  # ============================================
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+          fetch_size: 50
+        order_inserts: true
+        order_updates: true
+
+  # ============================================
+  # Security & JWT Configuration
+  # ============================================
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081
+
+  # ============================================
+  # RabbitMQ Configuration
+  # ============================================
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    connection-timeout: 10000
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 50
+
+  # ============================================
+  # Jackson Configuration
+  # ============================================
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+  # ============================================
+  # Thymeleaf Configuration
+  # ============================================
+  thymeleaf:
+    cache: true
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+
+  # ============================================
+  # Application Server Configuration
+  # ============================================
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+# ============================================
+# Server Configuration
+# ============================================
+server:
+  port: 8081
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    min-response-size: 1024
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# ============================================
+# Logging Configuration
+# ============================================
+logging:
+  level:
+    root: INFO
+    com.project.busticket: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/busticket-sub.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
+
+# ============================================
+# Custom Application Properties
+# ============================================
+app:
+  jwt:
+    secret: your_super_secret_jwt_key_change_this_in_production
+    expiration: 86400000  # 24 hours in milliseconds
+    refresh-expiration: 604800000  # 7 days in milliseconds
+  
+  file:
+    upload-dir: ./uploads
+    max-size: 10485760  # 10MB in bytes
+  
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:8081
+    allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+    allowed-headers: '*'
+    allow-credentials: true
+    max-age: 3600
+  
+  cache:
+    ttl: 3600  # Time to live in seconds
+
+# ============================================
+# Actuator Configuration (for monitoring)
+# ============================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# ============================================
+# Profile-Specific Configuration
+# ============================================
+# Dev Profile: spring.profiles.active=dev
+# Prod Profile: spring.profiles.active=prod
+# Test Profile: spring.profiles.active=test
